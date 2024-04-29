@@ -66,11 +66,59 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
-    protected function schedule(Schedule $schedule)
+    protected function schedule(Schedule $schedule): void
     {
         $schedule->call(function () {
-        // ส่ง HTTP request เพื่อเรียกใช้ Route '/test'
-            file_get_contents(url('http://127.0.0.1:8000/api/test'));
-        })->everyMinutes();
+            $idList = [1, 555]; // Example list of stock IDs
+            
+            foreach ($idList as $id) {
+                
+        $stock = DB::table('stocks')->where('stock_id',$id)->first();
+        
+        if ($stock) {
+            $stock_name = $stock->stock_shortname;
+        } else {
+            echo 'not have stock';
+        }
+
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL => "https://financial-modeling-prep.p.rapidapi.com/v3/stock/real-time-price/$stock_name",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => [
+                "X-RapidAPI-Host: financial-modeling-prep.p.rapidapi.com",
+                "X-RapidAPI-Key: 603a5298f7msh1d4c377949e7da9p1c42eajsn2979467f5b1e"
+            ],
+        ]);
+        
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        
+        curl_close($curl);
+        
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } 
+        else{
+            $data = json_decode($response, true);
+
+            foreach ($data['companiesPriceList'] as $company) {
+                $insertData = [
+                    'stock_id' => $id,
+                    'stockp_close' => $company['price'],
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+                DB::table('stock_prices')->insert($insertData);
+                break;
+            }
+            }
+            }
+        })->everyFiveMinutes();
     }
 }
