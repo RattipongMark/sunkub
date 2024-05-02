@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StockController;
-use App\Http\Controllers\AuthController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,4 +23,3 @@ Route::get('/stock/{id}', [StockController::class , 'index']);
 Route::get('/save/{id}', [StockController::class , 'store']);
 
 Route::get('/test', [StockController::class , 'show']);
-Route::post('/register', [AuthController::class , 'register']);
