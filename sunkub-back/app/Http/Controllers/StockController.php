@@ -53,6 +53,9 @@ class StockController extends Controller
      */
     public function store($id)
     {
+        $idList = DB::table('stocks')->pluck('stock_id'); // Example list of stock IDs
+      
+        foreach ($idList as $id) {
         $stock = DB::table('stocks')->where('stock_id',$id)->first();
         
         if ($stock) {
@@ -107,7 +110,7 @@ class StockController extends Controller
                 break;
             }
         }
-        
+    }
     }
 
     /**

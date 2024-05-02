@@ -20,8 +20,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->call(function () {
-            $idList = [1, 555]; // Example list of stock IDs
-            
+            $idList = DB::table('stocks')->pluck('stock_id');// Example list of stock IDs
+      
             foreach ($idList as $id) {
                 
         $stock = DB::table('stocks')->where('stock_id',$id)->first();
