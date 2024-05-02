@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -133,17 +132,3 @@
         </div>
     </body>
 </html>
-=======
-@extends('layouts.navbar')
-  
-@vite('resources/css/app.css')
-@vite('public/landing.css')
-
-@section('title', 'HOME')
-
-@section('content')
-  <div class="landing1">
-    a
-  </div>
-@endsection
->>>>>>> Stashed changes
