@@ -5,9 +5,20 @@
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {
+<<<<<<< Updated upstream
         "php": "^8.2",
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.9"
+=======
+        "php": "^8.1",
+        "arrilot/laravel-widgets": "^3.14",
+        "guzzlehttp/guzzle": "^7.2",
+        "izniburak/laravel-auto-routes": "^2.0",
+        "laravel/framework": "^10.10",
+        "laravel/sanctum": "^3.3",
+        "laravel/tinker": "^2.8",
+        "laravel/ui": "^4.5"
+>>>>>>> Stashed changes
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
