@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PortController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +15,7 @@ use App\Http\Controllers\PortController;
 */
 
 Route::get('/', function () {
-    return view('landing');
+    return view('welcome');
 });
 
 Route::get('/dashboard', function () {
@@ -27,9 +26,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    Route::get('/loginport', [PortController::class, 'login'])->name('portlogin');
-    Route::post('/loginport', [PortController::class, 'checkPort'])->name('checkPort');
 });
 
 require __DIR__.'/auth.php';
