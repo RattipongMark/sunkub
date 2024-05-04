@@ -1,19 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite('resources/css/app.css')
+    <link href='https://fonts.googleapis.com/css?family=Kanit' rel='stylesheet'>
+    <style>
+      body {
+          font-family: 'Kanit';
+      }
+    </style>
 </head>
 <body>
     <div class="bg-zinc-500 flex">
         <div class="flex h-screen">
             <div class="bg-neutral-800">
                 <div class="flex items-center">
-                    <img src="https://via.placeholder.com/70x40" alt="" class="ml-5 pl-3 pb-10"></img>
-                    <div class="text-green-400 font-bold text-3xl mb-4 p-4 pb-12 pr-10">
-                            Sunkub
-                    </div>
+                    <img src="{{url('images/LOGO.svg')}}" alt="" class="mb-4 ml-5 p-4 pl-3 pb-12 pr-16"></img>
                 </div>
                     <ul class="space-y-5">
                         <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">  
@@ -44,13 +47,16 @@
             </div>
         </div>
         <div class="flex-1 h-full">
+
+            <!-- div ก้อนนี้เป็นของแถบสีดำด้านบน -->
             <div class="navbar bg-zinc-800 text-white flex justify-between p-5 pl-5 pr-5">
-                <div>ภาพรวมแดชบอร์ด</div>
+                <div>ภาพรวม แดชบอร์ด</div>
                 <div class="flex items-center">
                     <div class="mr-4">ภูมรี เมืองคอน</div>
                     <img src="https://via.placeholder.com/30x30" alt="" class="mr-5"></img>
                 </div>
             </div>
+
             <div class="flex-1 mb-4">
                 <div class="text-white text-3xl font-bold pt-6 pl-5">
                     ยินดีต้อนรับ คุณภูมรี เมืองคอน
