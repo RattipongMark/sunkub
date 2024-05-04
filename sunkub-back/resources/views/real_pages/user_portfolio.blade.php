@@ -1,4 +1,4 @@
-@extends('sidebar')
+@extends('real_components/sidebar')
 
 @section('title')
     portfolio
