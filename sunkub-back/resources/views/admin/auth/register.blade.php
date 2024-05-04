@@ -1,7 +1,7 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('admin.register') }}">
         @csrf
-
+        <div>admin</div>
         <!-- Name -->
         <div>
             <x-input-label for="fname" :value="__('FirstName')" />
@@ -40,6 +40,12 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
+        <div>
+            <x-input-label for="tel" :value="__('tel')" />
+            <x-text-input id="tel" class="block mt-1 w-full" type="text" name="tel" :value="old('tel')" required autofocus autocomplete="tel" />
+            <x-input-error :messages="$errors->get('tel')" class="mt-2" />
+        </div>
+
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
@@ -61,6 +67,17 @@
                             name="password_confirmation" required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        </div>
+
+        <!-- Broker -->
+        <div>
+            <x-input-label for="broker_id" :value="__('Broker')" />
+            <select id="broker_id" class="block mt-1 w-full" name="broker_id" required>
+                @foreach($brokers as $broker)
+                    <option value="{{ $broker->broker_id }}">{{ $broker->broker_name }}</option>
+                @endforeach
+            </select>
+            <x-input-error :messages="$errors->get('broker_id')" class="mt-2" />
         </div>
 
         <div class="flex items-center justify-end mt-4">

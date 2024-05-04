@@ -18,15 +18,11 @@ return new class extends Migration
 
         Schema::create('stocks', function (Blueprint $table) {
             $table->id('stock_id');
-            $table->unsignedBigInteger('broker_id'); 
             $table->unsignedBigInteger('sector_id'); 
             $table->string('stock_shortname',5);
             $table->string('stock_name');
             $table->double('stock_current_price');
             $table->timestamps();
-
-            $table->foreign('broker_id')->references('broker_id')->on('brokers')->onDelete('cascade');
-            $table->foreign('sector_id')->references('sector_id')->on('sectors')->onDelete('cascade');
         });
 
         

@@ -36,6 +36,7 @@ class RegisteredUserController extends Controller
             "gender" => "required",
             "dob" => "required",
             "email" => "required|email|unique:users",
+            "tel" => "required",
             "password" => "required|confirmed", 
         ]);
 
@@ -45,6 +46,7 @@ class RegisteredUserController extends Controller
             'gender' => $request['gender'],
             'dob' => $request['dob'],
             'email' => $request['email'],
+            'tel' => $request['tel'],
             'password' => Hash::make($request['password']),
         ]);
 
