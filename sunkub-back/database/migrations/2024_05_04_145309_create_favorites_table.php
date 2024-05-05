@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('favorites', function (Blueprint $table) {
             $table->unsignedBigInteger('port_id');
-            $table->unsignedBigInteger('stock_id');
+            $table->string('stock_symbol',10);
 
-            $table->foreign('stock_id')->references('stock_id')->on('stocks')->onDelete('cascade');
+            $table->foreign('stock_symbol')->references('stock_symbol')->on('stocks')->onDelete('cascade');
             $table->foreign('port_id')->references('port_id')->on('ports')->onDelete('cascade');
 
-            $table->primary(['ports_id', 'stock_id']);
+            $table->primary(['port_id', 'stock_symbol']);
         });
     }
 

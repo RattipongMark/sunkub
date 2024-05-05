@@ -46,12 +46,12 @@ class PortController extends Controller
 
     public function addfavorite($request){
         $request->validate([
-            "stock_id" => "required",
+            "stock_symbol" => "required",
             "port_id" => "required",
         ]);
 
         $insertData = [
-            'stock_id' => $request['stock_id'],
+            'stock_symbol' => $request['stock_symbol'],
             'port_id' => $request['port_id'],
         ];
 

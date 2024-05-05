@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('stock_prices', function (Blueprint $table) {
             $table->id('stockp_id');
-            $table->unsignedBigInteger('stock_id'); 
+            $table->string('stock_symbol',10);
             $table->double('stockp_close',15,4);
             $table->timestamps();
 
-            $table->foreign('stock_id')->references('stock_id')->on('stocks')->onDelete('cascade');
+            $table->foreign('stock_symbol')->references('stock_symbol')->on('stocks')->onDelete('cascade');
         });
     }
 

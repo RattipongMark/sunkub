@@ -1,0 +1,47 @@
+.bglogin{
+    background-image: url('/images/bglogin.svg');
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: cover; /* or 100% 100% */
+    width: 100vw;
+    height: 100vh;
+}
+
+.logincard{
+    background-color: #404040;
+    width: 450px;
+    height: 450px;
+    border-radius: 40px;
+}
+
+.headtext{
+    color: white;
+    font-size: 50px;
+    font-weight: 500;
+}
+
+.purple100{
+    color: #C4B5FD;
+}
+
+.btn-purple{
+    border: 0;
+    background-color: #A78BFA;
+    color: white;
+}
+
+.link-purple{
+    color: #C4B5FD;
+}
+
+.link-purple:hover{
+    color: white;
+}
+
+.link-white{
+    color: white; 
+}
+
+.link-white:hover{
+    color: #C4B5FD;
+}

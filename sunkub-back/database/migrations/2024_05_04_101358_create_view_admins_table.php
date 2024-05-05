@@ -23,12 +23,12 @@ return new class extends Migration
 
         Schema::create('view_stocks', function (Blueprint $table) {
             $table->unsignedBigInteger('broker_id');
-            $table->unsignedBigInteger('stock_id');
+            $table->string('stock_symbol',10);
 
-            $table->foreign('stock_id')->references('stock_id')->on('stocks')->onDelete('cascade');
+            $table->foreign('stock_symbol')->references('stock_symbol')->on('stocks')->onDelete('cascade');
             $table->foreign('broker_id')->references('broker_id')->on('brokers')->onDelete('cascade');
 
-            $table->primary(['broker_id', 'stock_id']);
+            $table->primary(['broker_id', 'stock_symbol']);
         });
     }
 

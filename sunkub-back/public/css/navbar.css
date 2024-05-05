@@ -12,6 +12,9 @@
 .purple200{
     color: #E9D5FF;
 }
+.white200{
+    color: white;
+}
 
 .land1{
     background-image: url('/images/bg1.svg');

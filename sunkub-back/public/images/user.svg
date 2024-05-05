@@ -1,0 +1,41 @@
+<svg width="60" height="59" viewBox="0 0 60 59" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_i_535_2023)">
+<circle cx="30" cy="29.5" r="29.5" fill="#404040"/>
+</g>
+<g filter="url(#filter1_i_535_2023)">
+<path d="M30.0001 26.5999C34.4736 26.5999 38.1001 22.9734 38.1001 18.4999C38.1001 14.0264 34.4736 10.3999 30.0001 10.3999C25.5266 10.3999 21.9001 14.0264 21.9001 18.4999C21.9001 22.9734 25.5266 26.5999 30.0001 26.5999Z" fill="url(#paint0_diamond_535_2023)"/>
+<path d="M12.3561 44.1325C11.8299 45.5041 12.2998 47.0415 13.4604 47.9423C18.0298 51.4886 23.7685 53.5999 30.0004 53.5999C36.2386 53.5999 41.9827 51.4843 46.5544 47.9314C47.7144 47.0299 48.1833 45.4922 47.6562 44.1209C44.9313 37.0315 38.0574 31.9999 30.0084 31.9999C21.955 31.9999 15.078 37.0369 12.3561 44.1325Z" fill="url(#paint1_diamond_535_2023)"/>
+</g>
+<defs>
+<filter id="filter0_i_535_2023" x="0.5" y="0" width="59" height="63" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="4"/>
+<feGaussianBlur stdDeviation="5.6"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
+<feBlend mode="normal" in2="shape" result="effect1_innerShadow_535_2023"/>
+</filter>
+<filter id="filter1_i_535_2023" x="3" y="5" width="54" height="58" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="4"/>
+<feGaussianBlur stdDeviation="3.5"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
+<feBlend mode="normal" in2="shape" result="effect1_innerShadow_535_2023"/>
+</filter>
+<radialGradient id="paint0_diamond_535_2023" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(30.0065 31.9999) rotate(90) scale(21.6 17.8649)">
+<stop stop-color="#A78BFA"/>
+<stop offset="0.5" stop-color="#A78BFA"/>
+<stop offset="1" stop-color="#A78BFA"/>
+</radialGradient>
+<radialGradient id="paint1_diamond_535_2023" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(30.0065 31.9999) rotate(90) scale(21.6 17.8649)">
+<stop stop-color="#A78BFA"/>
+<stop offset="0.5" stop-color="#A78BFA"/>
+<stop offset="1" stop-color="#A78BFA"/>
+</radialGradient>
+</defs>
+</svg>

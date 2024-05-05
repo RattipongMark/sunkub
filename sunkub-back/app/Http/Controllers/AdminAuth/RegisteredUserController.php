@@ -39,7 +39,7 @@ class RegisteredUserController extends Controller
             "gender" => "required",
             "dob" => "required",
             "email" => "required|email|unique:users",
-            "tel" => "tel",
+            "tel" => "required",
             "password" => "required|confirmed",
             "broker_id" => "required", 
         ]);
@@ -66,6 +66,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect(RouteServiceProvider::ADMIN_DASHBOARD);
     }
 }

@@ -20,21 +20,21 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->call(function () {
-            $idList = DB::table('stocks')->pluck('stock_id');// Example list of stock IDs
+            $idList = DB::table('stocks')->pluck('stock_symbol');// Example list of stock IDs
       
             foreach ($idList as $id) {
                 
-        $stock = DB::table('stocks')->where('stock_id',$id)->first();
+        // $stock = DB::table('stocks')->where('stock_id',$id)->first();
         
-        if ($stock) {
-            $stock_name = $stock->stock_shortname;
-        } else {
-            echo 'not have stock';
-        }
+        // if ($stock) {
+        //     $stock_name = $stock->stock_shortname;
+        // } else {
+        //     echo 'not have stock';
+        // }
 
         $curl = curl_init();
         curl_setopt_array($curl, [
-            CURLOPT_URL => "https://financial-modeling-prep.p.rapidapi.com/v3/stock/real-time-price/$stock_name",
+            CURLOPT_URL => "https://financial-modeling-prep.p.rapidapi.com/v3/stock/real-time-price/$id",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
@@ -60,7 +60,7 @@ class Kernel extends ConsoleKernel
 
             foreach ($data['companiesPriceList'] as $company) {
                 $insertData = [
-                    'stock_id' => $id,
+                    'stock_symbol' => $id,
                     'stockp_close' => $company['price'],
                     'created_at' => now(),
                     'updated_at' => now(),
@@ -71,7 +71,7 @@ class Kernel extends ConsoleKernel
                     'stock_current_price' => $company['price'],
                     'updated_at' => now(),
                 ];
-                DB::table('stocks')->where('stock_id',$id)->update($updateData);
+                DB::table('stocks')->where('stock_symbol',$id)->update($updateData);
                 break;
             }
             }

@@ -13,7 +13,7 @@
 </head>
 <body>
     <div class="bg-zinc-500 flex">
-        <div class="flex h-screen">
+        <div class="flex ">
             <div class="bg-neutral-800">
                 <div class="flex items-center">
                     <img src="{{url('images/LOGO.svg')}}" alt="" class="mb-4 ml-5 p-4 pl-3 pb-12 pr-16"></img>
@@ -110,6 +110,66 @@
                         <div class="flex-auto bg-violet-50 h-14 w-16 rounded-r-2xl"></div>
                     </div>
                     <div class="pl-28 pr-28">
+                        <div class="flex flex-row items-center justify-between mt-8">
+                            <div class="flex items-center">
+                                <img src="https://via.placeholder.com/30x30" alt="" class="mr-9"></img>
+                                <div class="text-white text-lg">AAPL</div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="text-white text-lg mr-12">12345</div>
+                                <div class="text-white text-lg">12%</div>
+                            </div>
+                        </div>
+                        <div class="flex flex-row items-center justify-between mt-8">
+                            <div class="flex items-center">
+                                <img src="https://via.placeholder.com/30x30" alt="" class="mr-9"></img>
+                                <div class="text-white text-lg">AAPL</div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="text-white text-lg mr-12">12345</div>
+                                <div class="text-white text-lg">12%</div>
+                            </div>
+                        </div>
+                        <div class="flex flex-row items-center justify-between mt-8">
+                            <div class="flex items-center">
+                                <img src="https://via.placeholder.com/30x30" alt="" class="mr-9"></img>
+                                <div class="text-white text-lg">AAPL</div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="text-white text-lg mr-12">12345</div>
+                                <div class="text-white text-lg">12%</div>
+                            </div>
+                        </div>
+                        <div class="flex flex-row items-center justify-between mt-8">
+                            <div class="flex items-center">
+                                <img src="https://via.placeholder.com/30x30" alt="" class="mr-9"></img>
+                                <div class="text-white text-lg">AAPL</div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="text-white text-lg mr-12">12345</div>
+                                <div class="text-white text-lg">12%</div>
+                            </div>
+                        </div>
+                        <div class="flex flex-row items-center justify-between mt-8">
+                            <div class="flex items-center">
+                                <img src="https://via.placeholder.com/30x30" alt="" class="mr-9"></img>
+                                <div class="text-white text-lg">AAPL</div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="text-white text-lg mr-12">12345</div>
+                                <div class="text-white text-lg">12%</div>
+                            </div>
+                        </div>
+                        <div class="flex flex-row items-center justify-between mt-8">
+                            <div class="flex items-center">
+                                <img src="https://via.placeholder.com/30x30" alt="" class="mr-9"></img>
+                                <div class="text-white text-lg">AAPL</div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="text-white text-lg mr-12">12345</div>
+                                <div class="text-white text-lg">12%</div>
+                            </div>
+                        </div>
                         <div class="flex flex-row items-center justify-between mt-8">
                             <div class="flex items-center">
                                 <img src="https://via.placeholder.com/30x30" alt="" class="mr-9"></img>

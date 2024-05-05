@@ -1,4 +1,4 @@
-@extends('navbar')
+@extends('real_components/navbar')
 
 @section('title')
     Home

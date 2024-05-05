@@ -7,6 +7,7 @@
     <title>@yield('title') | sunkub</title>
     @vite('resources/css/app.css')
     <link rel="stylesheet" href="/css/navbar.css">
+    @yield('css')
     <link href='https://fonts.googleapis.com/css?family=Kanit' rel='stylesheet'>
     <style>
       body {
@@ -21,8 +22,8 @@
         </div>
         <div class="flex-none">
           <ul class="menu menu-horizontal px-1">
-            <li class="purple200"><a>เข้าสู่ระบบ</a></li>
-            <li><a>ลงทะเบียน</a></li>
+            <li class="purple200"><a href="/login">เข้าสู่ระบบ</a></li>
+            <li class="white200"><a href="/register">ลงทะเบียน</a></li>
           </ul>
         </div>
     </div>
