@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class PortController extends Controller
 {
     public function login(){
-        return view('loginport');
+        return view('real_pages.loginport');
     }
 
     public function checkPort(Request $request){
@@ -35,7 +35,7 @@ class PortController extends Controller
             // ตรวจสอบว่าพบข้อมูลผู้ใช้หรือไม่
             if ($user) {
                 // ส่งข้อมูลพอร์ตและข้อมูลผู้ใช้ไปยังหน้า myport
-                return view('myport', compact('port', 'user'));
+                return view('real_pages/user_index', compact('port', 'user'));
             } else {
                 return response()->json(['message' => 'User not found'], 404);
             }

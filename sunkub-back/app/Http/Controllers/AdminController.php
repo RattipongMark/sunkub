@@ -14,7 +14,7 @@ class AdminController extends Controller
 {
     public function index(Request $request): View
     {
-        return view('dashboard', [
+        return view('real_pages/guess_landing', [
             'user' => $request->user(),
         ]);
     }

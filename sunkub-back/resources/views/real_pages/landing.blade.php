@@ -8,7 +8,7 @@
     <div class="land1">
         <div class="grid grid-rows-2 gap-4">
             <div class="paddingland1">
-                <a href="">
+                <a href="/login">
                     <div>
                         <img src="{{url('images/btnland.svg')}}" class="btn-land" alt="">
                     </div>

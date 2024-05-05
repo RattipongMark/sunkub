@@ -16,7 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id'); 
             $table->unsignedBigInteger('broker_id');
             $table->string('user_broker');
-            $table->string('password'); 
+            $table->string('password');
+            $table->double('balance',15,4); 
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
