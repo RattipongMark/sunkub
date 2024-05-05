@@ -18,8 +18,8 @@
 <body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <div class="bg-zinc-500 flex">
-        <div class="flex h-screen">
-            <div class="bg-neutral-800">
+        <div class="flex">
+            <div class="bg-neutral-800 drop-shadow-lg">
                 <div class="flex items-center">
                     <img src="{{url('images/LOGO.svg')}}" alt="" class="mb-4 ml-5 p-4 pl-3 pb-12 pr-16"></img>
                 </div>
@@ -60,7 +60,7 @@
                         <li class="white200">
                             <details>
                                 <summary>
-                                    {{ $user->fname }}
+                                    test
                                 </summary>
                                 <ul class="p-2 bg-purple-600 rounded-t-none">
                                     <li class="purple200">

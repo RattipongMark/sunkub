@@ -39,4 +39,3 @@ Route::get('/admin/dashboard', function () {
 })->middleware(['auth:admin', 'verified'])->name('admin.dashboard');
 
 require __DIR__.'/adminauth.php';
-
