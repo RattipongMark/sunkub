@@ -6,3 +6,7 @@ a {
     color: white;
     text-decoration: none;
   }
+
+.navpo{
+  z-index: 1;
+}
