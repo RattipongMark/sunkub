@@ -24,7 +24,7 @@
     </script>
     <div class="bg-zinc-500">
         <div class="flex flex-row relative">
-            <div class="bg-neutral-800 drop-shadow-lg w-full basis-1/4">
+            <div class="bg-neutral-800 drop-shadow-lg basis-1/4 w-full">
                 <div class="flex flex-col items-center sticky top-0">
                     <img src="{{ url('images/LOGO.svg') }}" alt=""
                         class="p-4">

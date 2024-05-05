@@ -22,7 +22,7 @@
         <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active" data-bs-interval="10000">
-                    <div class="flex gap-8">
+                    <div class="flex gap-4">
                         <div class="tradingview-widget-container rounded-lg">
                             <div class="tradingview-widget-container__widget rounded-lg"></div>
                             <script class="rounded-lg" type="text/javascript"
@@ -132,7 +132,7 @@
             </button>
         </div>
     </div>
-    <div class="cardstock pt-8 grid justify-items-center">
+    <div class="cardstock pt-4 grid justify-items-center">
         <div> <!-- TradingView Widget BEGIN -->
             <div class="tradingview-widget-container">
                 <div class="tradingview-widget-container__widget"></div>
