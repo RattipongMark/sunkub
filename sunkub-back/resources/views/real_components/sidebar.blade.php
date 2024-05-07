@@ -22,10 +22,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
-    <div class="bg-zinc-500">
-        <div class="flex flex-row relative">
-            <div class="bg-neutral-800 drop-shadow-lg basis-1/4 w-full">
-                <div class="flex flex-col items-center sticky top-0">
+    <div class="bg-zinc-500 h-full">
+        <div class="flex flex-row relative h-full">
+            <div class="bg-neutral-800 drop-shadow-lg basis-1/4 w-full h-ful">
+                <div class="flex flex-col items-center sticky top-0 h-full">
                     <img src="{{ url('images/LOGO.svg') }}" alt=""
                         class="p-4">
                     </img>
@@ -57,12 +57,12 @@
                     </ul>
                 </div>
             </div>
-            <div class="grid w-full">
+            <div class="grid w-full h-full">
                 <div class="h-full sticky top-0 navpo">
                     <div class="navbar bg-zinc-800 text-white pl-5 pr-5 ">
                         <div>@yield('contentnav')</div>
                         <div class="dropdown dropdown-end pr-4 ">
-                            <div tabindex="0" role="button">test</div>
+                            <div tabindex="0" role="button">{{ $user->fname }}</div>
                             <ul tabindex="0"
                                 class="dropdown-content z-[1] menu p-2 shadow bg-violet-950 rounded-box w-36 mt-4">
                                 <li><a class="purple200" href="/loginport">สลับบัญชี</a></li>
@@ -80,7 +80,7 @@
                         </div>
                     </div>
                 </div>
-                <div>
+                <div class="h-fit">
                     @yield('content')
                 </div>
             </div>

@@ -31,6 +31,15 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/loginport', [PortController::class, 'login'])->name('portlogin');
     Route::post('/loginport', [PortController::class, 'checkPort'])->name('checkPort');
+
+    Route::get('/stock', [PortController::class, 'showstock'])->name('showstock');
+    Route::post('/specificstock/{stock_symbol}', [PortController::class, 'showspecificstock'])->name('poststock');
+
+    Route::post('/prebuy/{stock_symbol}', [PortController::class, 'prebuy'])->name('prebuy');
+    Route::post('/buy/{stock_symbol}', [PortController::class, 'buy'])->name('buy');
+
+    Route::post('/presell/{stock_symbol}', [PortController::class, 'presell'])->name('presell');
+    Route::post('/sell/{stock_symbol}', [PortController::class, 'sell'])->name('sell');
 });
 
 require __DIR__.'/auth.php';

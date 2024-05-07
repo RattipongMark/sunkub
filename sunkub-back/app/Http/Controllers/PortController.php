@@ -7,11 +7,16 @@ use Illuminate\Support\Facades\DB;
 
 class PortController extends Controller
 {
-    public function login(){
-        return view('real_pages.loginport');
+    
+    public function login(Request $request)
+    {
+        return view('real_pages/loginport', [
+            'user' => $request->user(),
+        ]);
     }
 
-    public function checkPort(Request $request){
+    public function checkPort(Request $request)
+    {
         // ตรวจสอบว่ามีข้อมูล user_broker และ password หรือไม่
         if (!$request->has(['user_broker', 'password'])) {
             return response()->json(['message' => 'Missing required parameters'], 400);
@@ -23,17 +28,19 @@ class PortController extends Controller
 
         // ค้นหา Port จากข้อมูลที่รับมา
         $port = DB::table('ports')
-                    ->where('user_broker', $user_broker)
-                    ->where('password', $password)
-                    ->first();
+            ->where('user_broker', $user_broker)
+            ->where('password', $password)
+            ->first();
 
         // ตรวจสอบว่าพอร์ตพบหรือไม่
         if ($port) {
             // หากพอร์ตพบ ให้ดึงข้อมูลของผู้ใช้จากตาราง users ด้วย user_id
-            $user = DB::table('users')->find($port->user_id);
-
+            $user_check = DB::table('users')->find($port->user_id);
+            $user = $request->user();
             // ตรวจสอบว่าพบข้อมูลผู้ใช้หรือไม่
-            if ($user) {
+            if ($user->id == $user_check->id) {
+                $request->session()->put('port', $port);
+                $request->session()->put('user', $user);
                 // ส่งข้อมูลพอร์ตและข้อมูลผู้ใช้ไปยังหน้า myport
                 return view('real_pages/user_index', compact('port', 'user'));
             } else {
@@ -44,7 +51,8 @@ class PortController extends Controller
         }
     }
 
-    public function addfavorite($request){
+    public function addfavorite($request)
+    {
         $request->validate([
             "stock_symbol" => "required",
             "port_id" => "required",
@@ -58,4 +66,222 @@ class PortController extends Controller
         DB::table('favorites')->insert($insertData);
     }
 
+
+    public function showstock(Request $request)
+    {
+        $port = $request->session()->get('port');
+        $user = $request->session()->get('user');
+        // ถ้าพอร์ตไม่มีค่าหรือไม่มี broker_id ให้กลับไปยังหน้าเดิม
+        if (!$port || !$port->broker_id) {
+            return redirect()->back()->with('error', 'Invalid port data');
+        }
+
+        // ดึงข้อมูล stock ที่มี broker_id เท่ากับ broker_id ในพอร์ต
+        $stocks = DB::table('view_stocks')
+            ->where('broker_id', $port->broker_id)
+            ->join('stocks', 'view_stocks.stock_symbol', '=', 'stocks.stock_symbol')
+            ->get();
+        // ส่งข้อมูล port และ user ไปยังหน้า myport
+        return view('real_pages.user_stock', compact('port', 'user', 'stocks'));
+    }
+
+    public function showspecificstock(Request $request, $stock_symbol)
+    {
+        // รับ stock id จาก request
+        $stock = DB::table('stocks')->where('stock_symbol', $stock_symbol)->first();
+        $port = $request->session()->get('port');
+        $user = $request->session()->get('user');
+        $broker = DB::table('brokers')->where('broker_id', $port->broker_id)->first();
+        $sector = DB::table('sectors')->where('sector_id', $stock->sector_id)->first();
+
+        // ตรวจสอบว่าพบหุ้นหรือไม่
+        if ($stock) {
+            // ส่งข้อมูลหุ้นไปยังหน้าแสดงผล
+            return view('real_pages.user_specific_stock', compact('port', 'user', 'stock', 'broker', 'sector'));
+        } else {
+            // หากไม่พบหุ้นให้ส่งคืน response 404
+            abort(404);
+        }
+    }
+
+    public function prebuy(Request $request, $stock_symbol)
+    {
+        // รับ stock id จาก request
+        $stock = DB::table('stocks')->where('stock_symbol', $stock_symbol)->first();
+        $port = $request->session()->get('port');
+        $user = $request->session()->get('user');
+        $broker = DB::table('brokers')->where('broker_id', $port->broker_id)->first();
+        $sector = DB::table('sectors')->where('sector_id', $stock->sector_id)->first();
+
+        // ตรวจสอบว่าพบหุ้นหรือไม่
+        if ($stock) {
+            // ส่งข้อมูลหุ้นไปยังหน้าแสดงผล
+            return view('real_pages.user_prebuy', compact('port', 'user', 'stock', 'broker', 'sector'));
+        } else {
+            // หากไม่พบหุ้นให้ส่งคืน response 404
+            abort(404);
+        }
+    }
+
+    public function buy(Request $request, $stock_symbol)
+    {
+        // รับข้อมูลจาก session
+        $port = $request->session()->get('port');
+        $volume = $request->volume;
+
+        // หา ID ของหุ้นล่าสุดจากตาราง stock_prices โดยใช้ stock_symbol
+        $latest_stock_price_id = DB::table('stock_prices')
+            ->where('stock_symbol', $stock_symbol)
+            ->orderBy('updated_at', 'desc')
+            ->value('stockp_id');
+
+        // ตรวจสอบว่ามีข้อมูลราคาหุ้นล่าสุดหรือไม่
+        if ($latest_stock_price_id) {
+            // หายอดเงินคงเหลือในพอร์ต
+            $balance = DB::table('ports')
+                ->where('port_id', $port->port_id)
+                ->value('balance');
+
+            // หาราคาหุ้นล่าสุด
+            $stockp_close = DB::table('stock_prices')
+                ->where('stockp_id', $latest_stock_price_id)
+                ->value('stockp_close');
+
+            // คำนวณจำนวนเงินทั้งหมดที่ต้องใช้ซื้อหุ้น
+            $total_cost = $volume * $stockp_close;
+
+            // เช็คว่ายอดเงินพอซื้อหุ้นหรือไม่
+            if ($balance >= $total_cost) {
+                // เพิ่มข้อมูลการซื้อในตาราง buys
+                DB::table('buys')->insert([
+                    'port_id' => $port->port_id,
+                    'stockp_id' => $latest_stock_price_id,
+                    'volume' => $volume,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+
+                // ลดยอดเงินคงเหลือในพอร์ต
+                DB::table('ports')
+                    ->where('port_id', $port->port_id)
+                    ->decrement('balance', $total_cost);
+
+                // ส่งกลับข้อความหรือ redirect ตามที่คุณต้องการ
+                return view('real_pages.user_buy_result', [
+                    'success' => true,
+                    'stock_symbol' => $stock_symbol,
+                    'volume' => $volume
+                ]);
+            }
+        }
+
+        $insufficient_funds = $latest_stock_price_id ? ($balance < $total_cost) : 0;
+        // กรณีไม่สำเร็จหรือไม่พบข้อมูลราคาหุ้นล่าสุด
+        return view('real_pages.user_buy_result', [
+            'success' => false,
+            'stock_symbol' => $stock_symbol,
+            'volume' => $volume,
+            'insufficient_funds' =>  $insufficient_funds,
+            'stock_not_found' => (!$latest_stock_price_id)
+        ]);
+    }
+
+    public function presell(Request $request, $stock_symbol)
+    {
+        // รับ stock id จาก request
+        $stock = DB::table('stocks')->where('stock_symbol', $stock_symbol)->first();
+        $port = $request->session()->get('port');
+        $user = $request->session()->get('user');
+        $broker = DB::table('brokers')->where('broker_id', $port->broker_id)->first();
+        $sector = DB::table('sectors')->where('sector_id', $stock->sector_id)->first();
+
+        // ตรวจสอบว่าพบหุ้นหรือไม่
+        if ($stock) {
+            // ส่งข้อมูลหุ้นไปยังหน้าแสดงผล
+            return view('real_pages.user_presell', compact('port', 'user', 'stock', 'broker', 'sector'));
+        } else {
+            // หากไม่พบหุ้นให้ส่งคืน response 404
+            abort(404);
+        }
+    }
+
+    public function sell(Request $request, $stock_symbol)
+    {
+        // รับข้อมูลจาก session
+        $port = $request->session()->get('port');
+        $volume = $request->volume;
+
+        // หา ID ของหุ้นล่าสุดจากตาราง stock_prices โดยใช้ stock_symbol
+        $latest_stock_price_id = DB::table('stock_prices')
+            ->where('stock_symbol', $stock_symbol)
+            ->orderBy('updated_at', 'desc')
+            ->value('stockp_id');
+
+        // ตรวจสอบว่ามีข้อมูลราคาหุ้นล่าสุดหรือไม่
+        if ($latest_stock_price_id) {
+            // หายอดเงินคงเหลือในพอร์ต
+            $balance = DB::table('ports')
+                ->where('port_id', $port->port_id)
+                ->value('balance');
+
+            // หาราคาหุ้นล่าสุด
+            $stockp_close = DB::table('stock_prices')
+                ->where('stockp_id', $latest_stock_price_id)
+                ->value('stockp_close');
+
+            // คำนวณจำนวนเงินทั้งหมดที่ต้องได้จากการขายหุ้น
+            $total_cost = $volume * $stockp_close;
+
+            // หาจำนวนหุ้นที่ถูกซื้อของหุ้นนั้นๆ
+            $total_buy_volume = DB::table('buys')
+                ->join('stock_prices', 'buys.stockp_id', '=', 'stock_prices.stockp_id')
+                ->where('buys.port_id', $port->port_id)
+                ->where('stock_prices.stock_symbol', $stock_symbol)
+                ->sum('buys.volume');
+
+            // หาจำนวนหุ้นที่ขายของหุ้นนั้นๆ
+            $total_sell_volume = DB::table('sells')
+                ->join('stock_prices', 'sells.stockp_id', '=', 'stock_prices.stockp_id')
+                ->where('sells.port_id', $port->port_id)
+                ->where('stock_prices.stock_symbol', $stock_symbol)
+                ->sum('sells.volume');
+
+            // คำนวณจำนวนหุ้นที่เหลือสำหรับหุ้นนั้นๆ
+            $total_remaining_volume = $total_buy_volume - $total_sell_volume;
+
+            // เช็คว่ายอดหุ้นพอขายหรือไม่
+            if ($volume <= $total_remaining_volume) {
+                // เพิ่มข้อมูลการขายในตาราง buys
+                DB::table('sells')->insert([
+                    'port_id' => $port->port_id,
+                    'stockp_id' => $latest_stock_price_id,
+                    'volume' => $volume,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+
+                // เพิ่มยอดเงินคงเหลือในพอร์ต
+                DB::table('ports')
+                    ->where('port_id', $port->port_id)
+                    ->increment('balance', $total_cost);
+
+                // ส่งกลับข้อความหรือ redirect ตามที่คุณต้องการ
+                return view('real_pages.user_sell_result', [
+                    'success' => true,
+                    'stock_symbol' => $stock_symbol,
+                    'volume' => $volume
+                ]);
+            }
+        }
+
+        $insufficient_funds = $latest_stock_price_id > 0 ? ($volume > $total_remaining_volume) : 0;
+        // กรณีไม่สำเร็จหรือไม่พบข้อมูลราคาหุ้นล่าสุด
+        return view('real_pages.user_sell_result', [
+            'success' => false,
+            'stock_symbol' => $stock_symbol,
+            'volume' => $volume,
+            'insufficient_funds' =>  $insufficient_funds,
+            'stock_not_found' => (!$latest_stock_price_id)
+        ]);
+    }
 }

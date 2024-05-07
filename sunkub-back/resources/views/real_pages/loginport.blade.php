@@ -1,4 +1,4 @@
- @extends('real_components/navbar')
+ @extends('real_components/navbarguess')
 
 @section('css')
     <link rel="stylesheet" href="/css/login.css">

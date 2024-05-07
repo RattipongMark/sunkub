@@ -17,6 +17,12 @@
 @section('content')
 
     <div class="guess_index1">
+        <form action="/stock" method="GET">
+            @csrf
+            <div class="pt-32 pr-8 flex justify-end">
+                <button type="submit" class="btn bg-purple-500 w-36 text-white">ลงทุนเลย</button>
+            </div>
+        </form>
     </div>
     <div class="grid justify-items-center pt-8">
         <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">

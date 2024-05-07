@@ -8,6 +8,15 @@
 
 .cardstock{
     background-color: #404040;
-    border-radius: 15px;
-    margin: 30px;
+    border-radius: 16px 16px 0px 0px;
+    margin: 30px 30px 0px 30px;
+}
+
+.cardliststock{
+    border-radius: 16px 16px 0px 0px;
+    background-color: #404040;
+}
+
+.rad{
+    border-radius: 15px; 
 }
