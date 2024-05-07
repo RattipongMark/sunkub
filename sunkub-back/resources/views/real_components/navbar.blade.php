@@ -18,12 +18,12 @@
 <body>
     <div class="navbar bg-base-100 navblur">
         <div class="flex-1">
-          <a class="btn btn-ghost text-xl"><img src="{{url('images/LOGO.svg')}}" alt=""></a>
+          <a href = "/" class="btn btn-ghost text-xl"><img src="{{url('images/LOGO.svg')}}" alt=""></a>
         </div>
         <div class="flex-none">
           <ul class="menu menu-horizontal px-1">
             <li class="purple200"><a href="/login">เข้าสู่ระบบ</a></li>
-            <li class="white200"><a href="/register">ลงทะเบียน</a></li>
+            <li class="white200"><a href="/regist">ลงทะเบียน</a></li>
           </ul>
         </div>
     </div>

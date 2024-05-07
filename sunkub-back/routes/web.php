@@ -19,6 +19,7 @@ Route::get('/', function () {
     return view('real_pages.landing');
 });
 
+
 Route::get('/dashboard', [AdminController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -37,5 +38,9 @@ require __DIR__.'/auth.php';
 Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
 })->middleware(['auth:admin', 'verified'])->name('admin.dashboard');
+
+Route::get('/regist', function(){
+    return view('guest_register');
+});
 
 require __DIR__.'/adminauth.php';
