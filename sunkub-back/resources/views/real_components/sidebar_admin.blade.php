@@ -32,27 +32,19 @@
                     <ul class="space-y-5 w-full">
                         <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block ">
                             <img src="https://via.placeholder.com/24x24" alt="" class="mr-5 pl-4"></img>
-                            <a href="#">การเทรดหุ้น</a>
-                        </li>
-                        <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
-                            <img src="https://via.placeholder.com/24x24" alt="" class="mr-5 pl-4"></img>
                             <a href="#">แดชบอร์ด</a>
                         </li>
                         <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
                             <img src="https://via.placeholder.com/24x24" alt="" class="mr-5 pl-4"></img>
-                            <a href="#">พอร์ตของฉัน</a>
+                            <a href="#">จัดการบริษัทตลาดหลักทรัพย์</a>
                         </li>
                         <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
                             <img src="https://via.placeholder.com/24x24" alt="" class="mr-5 pl-4"></img>
-                            <a href="#">ประวัติการซื้อขาย</a>
+                            <a href="#">จัดการหุ้น</a>
                         </li>
                         <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
                             <img src="https://via.placeholder.com/24x24" alt="" class="mr-5 pl-4"></img>
-                            <a href="#">รายการหุ้นที่สนใจ</a>
-                        </li>
-                        <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
-                            <img src="https://via.placeholder.com/24x24" alt="" class="mr-5 pl-4"></img>
-                            <a href="#">กระเป๋าตังค์</a>
+                            <a href="#">จัดการการดูแล</a>
                         </li>
                     </ul>
                 </div>
