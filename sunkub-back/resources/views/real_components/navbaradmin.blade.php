@@ -22,8 +22,8 @@
         </div>
         <div class="flex-none">
           <ul class="menu menu-horizontal px-1">
-            <li class="purple200"><a href="/login">เข้าสู่ระบบ</a></li>
-            <li class="white200"><a href="/register">ลงทะเบียน</a></li>
+            <li class="purple200"><a href="/admin/login">เข้าสู่ระบบ</a></li>
+            <li class="white200"><a href="/admin/register">ลงทะเบียน</a></li>
           </ul>
         </div>
     </div>

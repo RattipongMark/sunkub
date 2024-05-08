@@ -15,6 +15,7 @@ class PortController extends Controller
         ]);
     }
 
+    
     public function checkPort(Request $request)
     {
         // ตรวจสอบว่ามีข้อมูล user_broker และ password หรือไม่
@@ -49,6 +50,20 @@ class PortController extends Controller
         } else {
             return response()->json(['message' => 'Port does not exist'], 404);
         }
+    }
+
+    public function menu1(Request $request)
+    {
+        $port = $request->session()->get('port');
+        $user = $request->session()->get('user');
+        return view('real_pages/user_index', compact('port', 'user'));
+    }
+
+    public function dashboard(Request $request)
+    {
+        $port = $request->session()->get('port');
+        $user = $request->session()->get('user');
+        return view('real_pages/user_dashboard', compact('port', 'user'));
     }
 
     public function addfavorite($request)
@@ -128,6 +143,10 @@ class PortController extends Controller
         // รับข้อมูลจาก session
         $port = $request->session()->get('port');
         $volume = $request->volume;
+        $user = $request->session()->get('user');
+        $stock = DB::table('stocks')->where('stock_symbol', $stock_symbol)->first();
+        $broker = DB::table('brokers')->where('broker_id', $port->broker_id)->first();
+        $sector = DB::table('sectors')->where('sector_id', $stock->sector_id)->first();
 
         // หา ID ของหุ้นล่าสุดจากตาราง stock_prices โดยใช้ stock_symbol
         $latest_stock_price_id = DB::table('stock_prices')
@@ -171,7 +190,7 @@ class PortController extends Controller
                     'success' => true,
                     'stock_symbol' => $stock_symbol,
                     'volume' => $volume
-                ]);
+                ],compact('port', 'user', 'stock', 'broker', 'sector'));
             }
         }
 
@@ -183,7 +202,7 @@ class PortController extends Controller
             'volume' => $volume,
             'insufficient_funds' =>  $insufficient_funds,
             'stock_not_found' => (!$latest_stock_price_id)
-        ]);
+        ],compact('port', 'user', 'stock', 'broker', 'sector'));
     }
 
     public function presell(Request $request, $stock_symbol)
@@ -210,6 +229,11 @@ class PortController extends Controller
         // รับข้อมูลจาก session
         $port = $request->session()->get('port');
         $volume = $request->volume;
+        $user = $request->session()->get('user');
+        $stock = DB::table('stocks')->where('stock_symbol', $stock_symbol)->first();
+        $broker = DB::table('brokers')->where('broker_id', $port->broker_id)->first();
+        $sector = DB::table('sectors')->where('sector_id', $stock->sector_id)->first();
+
 
         // หา ID ของหุ้นล่าสุดจากตาราง stock_prices โดยใช้ stock_symbol
         $latest_stock_price_id = DB::table('stock_prices')
@@ -270,7 +294,7 @@ class PortController extends Controller
                     'success' => true,
                     'stock_symbol' => $stock_symbol,
                     'volume' => $volume
-                ]);
+                ],compact('port', 'user', 'stock', 'broker', 'sector'));
             }
         }
 
@@ -282,6 +306,6 @@ class PortController extends Controller
             'volume' => $volume,
             'insufficient_funds' =>  $insufficient_funds,
             'stock_not_found' => (!$latest_stock_price_id)
-        ]);
+        ],compact('port', 'user', 'stock', 'broker', 'sector'));
     }
 }

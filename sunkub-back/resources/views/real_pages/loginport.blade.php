@@ -30,14 +30,14 @@
                             <div class="grid grid-cols-4 pt-12 pl-12 pr-12">
                                 <div class="items-center"><img src="{{url('images/user.svg')}}" alt=""></div>
                                 <div class="items-center col-span-3">
-                                    <input  id="user_broker" placeholder="Username" class="input input-bordered input-md w-full max-w-xs" type="text" name="user_broker" :value="old('user_broker')" />
+                                    <input  id="user_broker" placeholder="Username" class="input input-bordered input-md w-full max-w-xs text-white" type="text" name="user_broker" :value="old('user_broker')" />
                                     <x-input-error :messages="$errors->get('user_broker')" class="mt-2" />
                                 </div>
                             </div>
                             <div class="grid grid-cols-4 pt-12 pl-12 pr-12">
                                 <div class="items-center"><img src="{{url('images/pass.svg')}}" alt=""></div>
                                 <div class="items-center col-span-3">
-                                    <input placeholder="Password" class="input input-bordered input-md w-full max-w-xs"
+                                    <input placeholder="Password" class="input input-bordered input-md w-full max-w-xs text-white"
                                         type="password"
                                         name="password"
                                         required autocomplete="current-password"
@@ -46,7 +46,7 @@
                                 </div>
                             </div>
                             <div class="pt-12 pl-12 pr-12">
-                                <button class="btn btn-purple w-full" width="100%">Button</button>
+                                <button class="btn btn-purple w-full" width="100%">เข้าสู่พอร์ต</button>
                             </div>
                             <div class="pt-12 pl-12 pr-12 text-red-400 text-center">
                                 <div class="text-sm">กรณีไม่มีบัญชี กรุณาสมัคร ณ ตลาดหลักทรัพย์ที่ให้บริการ</div>

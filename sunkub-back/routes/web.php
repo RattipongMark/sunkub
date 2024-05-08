@@ -33,13 +33,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/loginport', [PortController::class, 'checkPort'])->name('checkPort');
 
     Route::get('/stock', [PortController::class, 'showstock'])->name('showstock');
-    Route::post('/specificstock/{stock_symbol}', [PortController::class, 'showspecificstock'])->name('poststock');
+    Route::get('/specificstock/{stock_symbol}', [PortController::class, 'showspecificstock'])->name('poststock');
 
-    Route::post('/prebuy/{stock_symbol}', [PortController::class, 'prebuy'])->name('prebuy');
+    Route::get('/prebuy/{stock_symbol}', [PortController::class, 'prebuy'])->name('prebuy');
     Route::post('/buy/{stock_symbol}', [PortController::class, 'buy'])->name('buy');
 
-    Route::post('/presell/{stock_symbol}', [PortController::class, 'presell'])->name('presell');
+    Route::get('/presell/{stock_symbol}', [PortController::class, 'presell'])->name('presell');
     Route::post('/sell/{stock_symbol}', [PortController::class, 'sell'])->name('sell');
+
+    Route::get('/trading', [PortController::class, 'menu1'])->name('trading');
+    Route::get('/mydashboard', [PortController::class, 'dashboard'])->name('mydashboard');
 });
 
 require __DIR__.'/auth.php';
@@ -48,8 +51,5 @@ Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
 })->middleware(['auth:admin', 'verified'])->name('admin.dashboard');
 
-Route::get('/regist', function(){
-    return view('guest_register');
-});
 
 require __DIR__.'/adminauth.php';

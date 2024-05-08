@@ -23,7 +23,7 @@ class RegisteredUserController extends Controller
     public function create(): View
     {
         $brokers = DB::select('SELECT * FROM brokers');
-        return view('admin.auth.register', compact('brokers'));
+        return view('admin.auth.admin_register', compact('brokers'));
     }
 
     /**

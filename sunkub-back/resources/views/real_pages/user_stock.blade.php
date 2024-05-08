@@ -37,7 +37,7 @@
         <div class="flex flex-col w-full gap-2">
             @foreach ($stocks as $stock)
             <div class="pb-1">
-                <form action="{{ route('poststock', ['stock_symbol' => $stock->stock_symbol]) }}" method="POST">
+                <form action="{{ route('poststock', ['stock_symbol' => $stock->stock_symbol]) }}" method="GET">
                     @csrf
                     <input type="hidden" name="stock_symbol" value="{{ $stock->stock_symbol }}">
                     <button type="submit" class="rounded-2xl bg-neutral-800 w-full h-24 drop-shadow-md flex pt-1.5 pl-12 items-center justify-between">

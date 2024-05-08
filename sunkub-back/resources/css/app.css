@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-a {
+a{
     color: white;
     text-decoration: none;
   }

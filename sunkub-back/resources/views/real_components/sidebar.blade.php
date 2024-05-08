@@ -22,36 +22,40 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
-    <div class="bg-zinc-500 h-full">
+    <div class="bg-zinc-600 h-full">
         <div class="flex flex-row relative h-full">
-            <div class="bg-neutral-800 drop-shadow-lg basis-1/4 w-full h-ful">
-                <div class="flex flex-col items-center sticky top-0 h-full">
+            <div class="sticky bg-neutral-800 drop-shadow-lg basis-1/4 w-full h-ful ">
+                <div class="sticky flex flex-col items-center top-0">
                     <img src="{{ url('images/LOGO.svg') }}" alt=""
                         class="p-4">
                     </img>
                     <ul class="space-y-5 w-full">
-                        <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block ">
-                            <img src="https://via.placeholder.com/24x24" alt="" class="mr-5 pl-4"></img>
-                            <a href="#">การเทรดหุ้น</a>
-                        </li>
+                        <a href="/trading">
+                            <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block ">
+                                <img src="{{ url('images/ChartLineUp.svg')}}" alt="" class="mr-5 pl-4"></img>
+                                <div>การเทรดหุ้น</div>
+                            </li>   
+                        </a>
+                        <a href="/mydashboard">
+                            <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
+                                <img src="{{ url('images/ChartPieSlice.svg')}}" alt="" class="mr-5 pl-4"></img>
+                                <div>แดชบอร์ด</div>
+                            </li>
+                        </a>
                         <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
-                            <img src="https://via.placeholder.com/24x24" alt="" class="mr-5 pl-4"></img>
-                            <a href="#">แดชบอร์ด</a>
-                        </li>
-                        <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
-                            <img src="https://via.placeholder.com/24x24" alt="" class="mr-5 pl-4"></img>
+                            <img src="{{ url('images/Clipboard.svg')}}" alt="" class="mr-5 pl-4"></img>
                             <a href="#">พอร์ตของฉัน</a>
                         </li>
                         <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
-                            <img src="https://via.placeholder.com/24x24" alt="" class="mr-5 pl-4"></img>
+                            <img src="{{ url('images/Clock.svg')}}" alt="" class="mr-5 pl-4"></img>
                             <a href="#">ประวัติการซื้อขาย</a>
                         </li>
                         <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
-                            <img src="https://via.placeholder.com/24x24" alt="" class="mr-5 pl-4"></img>
+                            <img src="{{ url('images/Star.svg')}}" alt="" class="mr-5 pl-4"></img>
                             <a href="#">รายการหุ้นที่สนใจ</a>
                         </li>
                         <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
-                            <img src="https://via.placeholder.com/24x24" alt="" class="mr-5 pl-4"></img>
+                            <img src="{{ url('images/Wallet.svg')}}" alt="" class="mr-5 pl-4"></img>
                             <a href="#">กระเป๋าตังค์</a>
                         </li>
                     </ul>
