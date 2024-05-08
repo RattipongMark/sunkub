@@ -24,39 +24,27 @@
     </script>
     <div class="bg-zinc-600 h-full">
         <div class="flex flex-row relative h-full">
-            <div class="sticky bg-neutral-800 drop-shadow-lg basis-1/4 w-full h-ful ">
-                <div class="sticky flex flex-col items-center top-0">
+            <div class="bg-neutral-800 drop-shadow-lg basis-1/4 w-full h-ful">
+                <div class="flex flex-col items-center sticky top-0 h-full">
                     <img src="{{ url('images/LOGO.svg') }}" alt=""
                         class="p-4">
                     </img>
                     <ul class="space-y-5 w-full">
-                        <a href="/trading">
-                            <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block ">
-                                <img src="{{ url('images/ChartLineUp.svg')}}" alt="" class="mr-5 pl-4"></img>
-                                <div>การเทรดหุ้น</div>
-                            </li>   
-                        </a>
-                        <a href="/mydashboard">
-                            <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
-                                <img src="{{ url('images/ChartPieSlice.svg')}}" alt="" class="mr-5 pl-4"></img>
-                                <div>แดชบอร์ด</div>
-                            </li>
-                        </a>
-                        <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
-                            <img src="{{ url('images/Clipboard.svg')}}" alt="" class="mr-5 pl-4"></img>
-                            <a href="#">พอร์ตของฉัน</a>
+                        <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block ">
+                            <img src="https://via.placeholder.com/24x24" alt="" class="mr-5 pl-4"></img>
+                            <a href="#">แดชบอร์ด</a>
                         </li>
                         <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
-                            <img src="{{ url('images/Clock.svg')}}" alt="" class="mr-5 pl-4"></img>
-                            <a href="#">ประวัติการซื้อขาย</a>
+                            <img src="https://via.placeholder.com/24x24" alt="" class="mr-5 pl-4"></img>
+                            <a href="#">จัดการบริษัทตลาดหลักทรัพย์</a>
                         </li>
                         <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
-                            <img src="{{ url('images/Star.svg')}}" alt="" class="mr-5 pl-4"></img>
-                            <a href="#">รายการหุ้นที่สนใจ</a>
+                            <img src="https://via.placeholder.com/24x24" alt="" class="mr-5 pl-4"></img>
+                            <a href="#">จัดการหุ้น</a>
                         </li>
                         <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
-                            <img src="{{ url('images/Wallet.svg')}}" alt="" class="mr-5 pl-4"></img>
-                            <a href="#">กระเป๋าตังค์</a>
+                            <img src="https://via.placeholder.com/24x24" alt="" class="mr-5 pl-4"></img>
+                            <a href="#">จัดการการดูแล</a>
                         </li>
                     </ul>
                 </div>

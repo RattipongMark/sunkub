@@ -22,8 +22,8 @@
             ข้อมูลที่แสดงประวัติการเงินของคุณ
         </div>
     </div>
-    <div class="flex-1 ml-5 mr-5 mb-1">
-        <div class="flex grid grid-cols-3 drop-shadow-lg gap-5">
+    <div class="flex-1 ml-7 mr-7 mb-3">
+        <div class="flex grid grid-cols-3 drop-shadow-lg gap-3">
             <div class="bg-neutral-700 rounded-2xl p-4 flex flex-col justify-between">
                 <div class="text-white text-xl mb-10">เงินในบัญชี</div>
                 <div class="flex flex-row">
@@ -54,8 +54,8 @@
             </div>
         </div>
     </div>
-    <div class="flex grid grid-cols-5 gap-5 p-2 pl-10 pr-10">
-        <div class="col-span-3 bg-neutral-700 rounded-2xl p-6 drop-shadow-lg">
+    <div class="flex grid grid-cols-5 gap-3 p-2 pl-10 pr-10">
+        <div class="col-span-3 bg-neutral-700 rounded-2xl p-6 drop-shadow-lg ml-5">
             <div class="text-white text-xl mb-2">รายละเอียดการลงทุน</div>
             <div class="text-white text-sm opacity-75 mb-10">สินทรัพย์ที่คุณมีในบัญชีของคุณ</div>
             <div class="text-white text-3xl mb-2">฿58,783</div>
@@ -77,7 +77,7 @@
                         <div class="text-white text-lg">12%</div>
                     </div>
                 </div>
-                <div class="flex flex-row items-center justify-between mt-8">
+                <div class="flex flex-row items-center justify-between mt-2">
                     <div class="flex items-center">
                         <img src="https://via.placeholder.com/30x30" alt="" class="mr-9"></img>
                         <div class="text-white text-lg">AAPL</div>
@@ -87,7 +87,7 @@
                         <div class="text-white text-lg">12%</div>
                     </div>
                 </div>
-                <div class="flex flex-row items-center justify-between mt-8">
+                <div class="flex flex-row items-center justify-between mt-2">
                     <div class="flex items-center">
                         <img src="https://via.placeholder.com/30x30" alt="" class="mr-9"></img>
                         <div class="text-white text-lg">AAPL</div>
@@ -97,7 +97,7 @@
                         <div class="text-white text-lg">12%</div>
                     </div>
                 </div>
-                <div class="flex flex-row items-center justify-between mt-8">
+                <div class="flex flex-row items-center justify-between mt-2">
                     <div class="flex items-center">
                         <img src="https://via.placeholder.com/30x30" alt="" class="mr-9"></img>
                         <div class="text-white text-lg">AAPL</div>
@@ -107,7 +107,7 @@
                         <div class="text-white text-lg">12%</div>
                     </div>
                 </div>
-                <div class="flex flex-row items-center justify-between mt-8">
+                <div class="flex flex-row items-center justify-between mt-2">
                     <div class="flex items-center">
                         <img src="https://via.placeholder.com/30x30" alt="" class="mr-9"></img>
                         <div class="text-white text-lg">AAPL</div>
@@ -119,7 +119,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-span-2 bg-neutral-700 rounded-2xl p-6 h-auto drop-shadow-lg">
+        <div class="col-span-2 bg-neutral-700 rounded-2xl p-6 mr-5 h-auto drop-shadow-lg">
             <div class="flex flex-col">
                 <div class="text-white text-xl">เงินลงทุนทั้งหมดทุกบัญชีของคุณ</div>
                 <div class="text-white pt-2 opacity-75">สินทรัพย์ที่คุณมีในทุกบัญชีของคุณ</div>
