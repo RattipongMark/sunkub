@@ -54,11 +54,8 @@
                     <div class="flex justify-end mt-14">
                         <a href="" class="bg-violet-300 mb-3 rounded-xl hover:bg-violet-400"><p class="text-neutral-800 text-xl mx-4 my-2">ยืนยัน</p></a>
                     </div>
-
-
                 </div>
             </div>
         </div>
-
     </div>
 @endsection

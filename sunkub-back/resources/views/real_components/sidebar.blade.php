@@ -62,7 +62,7 @@
                     <div class="navbar bg-zinc-800 text-white pl-5 pr-5 ">
                         <div>@yield('contentnav')</div>
                         <div class="dropdown dropdown-end pr-4 ">
-                            <div tabindex="0" role="button">{{ $user->fname }}</div>
+                            <div tabindex="0" role="button">test</div>
                             <ul tabindex="0"
                                 class="dropdown-content z-[1] menu p-2 shadow bg-violet-950 rounded-box w-36 mt-4">
                                 <li><a class="purple200" href="/loginport">สลับบัญชี</a></li>
