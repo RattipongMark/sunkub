@@ -1,0 +1,7 @@
+.dashedBG {
+    height: 58px;
+    background-image: url('/images/dashed_frame.svg');
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

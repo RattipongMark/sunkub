@@ -1,6 +1,7 @@
 @extends('real_components.sidebar_admin')
 
 @section('css')
+    <link rel="stylesheet" href="/css/manageBroke.css">
     <link rel="stylesheet" href="/css/user.css">
     @vite('resources/css/app.css')
 @endsection
@@ -39,8 +40,8 @@ $bgColors = ['bg-zinc-800', 'bg-zinc-600']; //define background colors
                 @endfor
             </div>
         </div>
-        <div class="mt-3">
-            <a href=""><img src="images/addButton.svg" class="w-full"></a>
+        <div class="mt-3 dashedBG">
+            <a href=""><img src="images/PlusCircle.svg"></a>
         </div>
     </div>
 @endsection
