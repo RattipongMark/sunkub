@@ -30,8 +30,8 @@
             <div class="grid grid-cols-5">
                 <div class="text-white flex items-center justify-center text-lg p-6 ml-5">สัญลักษณ์</div>
                 <div class="text-white flex items-center justify-center text-lg p-6">ปริมาณการซื้อขาย</div>
+                <div class="text-white flex items-center justify-center text-lg p-6">ประเภท</div>
                 <div class="text-white flex items-center justify-center text-lg p-6">ราคา</div>
-                <div class="text-white flex items-center justify-center text-lg p-6">เวลา</div>
                 <div class="text-white flex items-center justify-center text-lg p-6 mr-5">วัน/เดือน/ปี</div>
             </div>
         </div>
@@ -41,7 +41,7 @@
             <div class="grid grid-cols-5">
                 <div class="text-white flex items-center justify-center text-lg p-6 ml-5">AAPL</div>
                 <div class="text-white flex items-center justify-center text-lg p-6">test</div>
-                <div class="text-white flex items-center justify-center text-lg p-6">test</div>
+                <div class="text-white flex items-center justify-center text-lg p-6">ซื้อ</div>
                 <div class="text-white flex items-center justify-center text-lg p-6">test</div>
                 <div class="text-white flex items-center justify-center text-lg p-6 mr-5">test</div>
             </div>
@@ -52,7 +52,7 @@
             <div class="grid grid-cols-5">
                 <div class="text-white flex items-center justify-center text-lg p-6 ml-5">AAPL</div>
                 <div class="text-white flex items-center justify-center text-lg p-6">test</div>
-                <div class="text-white flex items-center justify-center text-lg p-6">test</div>
+                <div class="text-white flex items-center justify-center text-lg p-6">ขาย</div>
                 <div class="text-white flex items-center justify-center text-lg p-6">test</div>
                 <div class="text-white flex items-center justify-center text-lg p-6 mr-5">test</div>
             </div>
@@ -63,7 +63,7 @@
             <div class="grid grid-cols-5">
                 <div class="text-white flex items-center justify-center text-lg p-6 ml-5">AAPL</div>
                 <div class="text-white flex items-center justify-center text-lg p-6">test</div>
-                <div class="text-white flex items-center justify-center text-lg p-6">test</div>
+                <div class="text-white flex items-center justify-center text-lg p-6">ซื้อ</div>
                 <div class="text-white flex items-center justify-center text-lg p-6">test</div>
                 <div class="text-white flex items-center justify-center text-lg p-6 mr-5">test</div>
             </div>

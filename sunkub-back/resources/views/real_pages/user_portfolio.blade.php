@@ -66,7 +66,7 @@
         <div class="flex flex-col h-full">
             <div class="grid grid-cols-6">
                 <div class="text-white flex items-center justify-center text-lg p-6 ml-5">สัญลักษณ์</div>
-                <div class="text-white flex items-center justify-center text-lg p-6">ปริมาณการซื้อขาย</div>
+                <div class="text-white flex items-center justify-center text-sm p-6">ปริมาณการซื้อขาย</div>
                 <div class="text-white flex items-center justify-center text-lg p-6">ราคาเฉลี่ย</div>
                 <div class="text-white flex items-center justify-center text-lg p-6">ราคาตลาด</div>
                 <div class="text-white flex items-center justify-center text-sm p-6">กำไร / ขาดทุน ที่ยังไม่ปิดสถานะ</div>
