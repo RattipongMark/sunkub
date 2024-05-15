@@ -13,9 +13,11 @@
       body {
           font-family: 'Kanit';
       }
+      
       </style>
 </head>
 <body>
+  
     <div class="navbar bg-base-100 navblur">
         <div class="flex-1">
           <a href = "/" class="btn btn-ghost text-xl"><img src="{{url('images/LOGO.svg')}}" alt=""></a>

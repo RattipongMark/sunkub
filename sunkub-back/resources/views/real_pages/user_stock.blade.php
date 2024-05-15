@@ -40,10 +40,10 @@
                 <form action="{{ route('poststock', ['stock_symbol' => $stock->stock_symbol]) }}" method="GET">
                     @csrf
                     <input type="hidden" name="stock_symbol" value="{{ $stock->stock_symbol }}">
-                    <button type="submit" class="rounded-2xl bg-neutral-800 w-full h-24 drop-shadow-md flex pt-1.5 pl-12 items-center justify-between">
+                    <button type="submit" class="px-12 rounded-2xl bg-neutral-800 w-full h-24 drop-shadow-md flex pt-1.5 items-center justify-between">
                         <div class="grid grid-rows-2">
-                            <div class="text-green-400 text-2xl">{{ $stock->stock_symbol }}</div>
-                            <div class="text-white opacity-50 text-sm pt-1">{{ $stock->stock_name }}</div>
+                            <div class="text-green-400 text-2xl text-left">{{ $stock->stock_symbol }}</div>
+                            <div class="text-white opacity-50 text-sm pt-1 text-left">{{ $stock->stock_name }}</div>
                         </div>  
                         <div class="grid grid-cols-2 gap-16">
                             <div class="grid grid-rows-2">
@@ -51,8 +51,8 @@
                                 <div class="text-white  text-sm pt-1">{{ $stock->updated_at }}</div>
                             </div>
                             <div class="grid grid-rows-2">
-                                <div class="text-purple-200 text-2xl">{{ $stock->stock_current_price }}</div>
-                                <div class="text-white opacity-50 text-sm pt-1">USD/volume</div>
+                                <div class="text-purple-200 text-2xl text-right "> {{ number_format($stock->stock_current_price,2) }}</div>
+                                <div class="text-white opacity-50 text-sm pt-1 text-right">USD/volume</div>
                             </div>
                         </div>
                     </button>

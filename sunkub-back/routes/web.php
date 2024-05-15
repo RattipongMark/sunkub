@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/trading', [PortController::class, 'menu1'])->name('trading');
     Route::get('/mydashboard', [PortController::class, 'dashboard'])->name('mydashboard');
+    Route::get('/myport', [PortController::class, 'portfolio'])->name('portfolio');
 });
 
 require __DIR__.'/auth.php';

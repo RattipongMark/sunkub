@@ -30,14 +30,14 @@
                             <div class="grid grid-cols-4 pt-12 pl-12 pr-12">
                                 <div class="items-center"><img src="{{url('images/user.svg')}}" alt=""></div>
                                 <div class="items-center col-span-3">
-                                    <input  id="user_broker" placeholder="Username" class="input input-bordered input-md w-full max-w-xs text-white" type="text" name="user_broker" :value="old('user_broker')" />
+                                    <input  id="user_broker" placeholder="Username" class="mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" name="user_broker" :value="old('user_broker')" />
                                     <x-input-error :messages="$errors->get('user_broker')" class="mt-2" />
                                 </div>
                             </div>
                             <div class="grid grid-cols-4 pt-12 pl-12 pr-12">
                                 <div class="items-center"><img src="{{url('images/pass.svg')}}" alt=""></div>
                                 <div class="items-center col-span-3">
-                                    <input placeholder="Password" class="input input-bordered input-md w-full max-w-xs text-white"
+                                    <input placeholder="Password" class="mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         type="password"
                                         name="password"
                                         required autocomplete="current-password"

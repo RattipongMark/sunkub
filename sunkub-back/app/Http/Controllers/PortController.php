@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class PortController extends Controller
 {
-    
+
     public function login(Request $request)
     {
         return view('real_pages/loginport', [
@@ -15,7 +15,7 @@ class PortController extends Controller
         ]);
     }
 
-    
+
     public function checkPort(Request $request)
     {
         // ตรวจสอบว่ามีข้อมูล user_broker และ password หรือไม่
@@ -56,14 +56,262 @@ class PortController extends Controller
     {
         $port = $request->session()->get('port');
         $user = $request->session()->get('user');
+
+
         return view('real_pages/user_index', compact('port', 'user'));
     }
 
     public function dashboard(Request $request)
     {
+
         $port = $request->session()->get('port');
         $user = $request->session()->get('user');
-        return view('real_pages/user_dashboard', compact('port', 'user'));
+        $port->balance = DB::table('ports')->where('port_id', $port->port_id)->value('balance');
+
+        $total_buy = DB::table('buys')
+            ->join('stock_prices', 'buys.stockp_id', '=', 'stock_prices.stockp_id')
+            ->where('buys.port_id', $port->port_id)
+            ->sum(DB::raw('buys.volume * stock_prices.stockp_close'));
+
+        $total_invest = DB::table('buys')
+            ->join('stock_prices', 'buys.stockp_id', '=', 'stock_prices.stockp_id')
+            ->join('ports', 'buys.port_id', '=', 'ports.port_id')
+            ->where('ports.user_id', $port->user_id)
+            ->sum(DB::raw('buys.volume * stock_prices.stockp_close'));
+
+        $total_buy_eachport = DB::table('buys')
+            ->join('stock_prices', 'buys.stockp_id', '=', 'stock_prices.stockp_id')
+            ->join('ports', 'buys.port_id', '=', 'ports.port_id')
+            ->join('brokers', 'ports.broker_id', '=', 'brokers.broker_id')
+            ->where('ports.user_id', $port->user_id)
+            ->select('ports.port_id', 'brokers.broker_name', DB::raw('SUM(buys.volume * stock_prices.stockp_close) AS total_buy_amount'))
+            ->groupBy('ports.port_id', 'brokers.broker_name')
+            ->get();
+
+        $total_buy_eachport_by_stock = DB::table('buys')
+            ->join('stock_prices', 'buys.stockp_id', '=', 'stock_prices.stockp_id')
+            ->join('stocks', 'stock_prices.stock_symbol', '=', 'stocks.stock_symbol')
+            ->join('ports', 'buys.port_id', '=', 'ports.port_id')
+            ->where('ports.port_id', $port->port_id)
+            ->select('stocks.stock_symbol', DB::raw('SUM(buys.volume * stock_prices.stockp_close) AS total_buy_amount'))
+            ->groupBy('stocks.stock_symbol')
+            ->orderBy('total_buy_amount', 'desc')
+            ->get();
+
+        $percentage = [];
+
+
+        foreach ($total_buy_eachport_by_stock as $buy) {
+            $temp = $total_buy_eachport->where('port_id', $port->port_id)->first();
+
+            if ($temp && $temp->total_buy_amount != 0) {
+                $percentage[$buy->stock_symbol] = ($buy->total_buy_amount / $temp->total_buy_amount) * 100;
+            } else {
+                $percentage[$buy->stock_symbol] = 0;
+            }
+        }
+
+        $total_buy_stock = DB::table('buys')
+            ->join('stock_prices', 'buys.stockp_id', '=', 'stock_prices.stockp_id')
+            ->join('stocks', 'stock_prices.stock_symbol', '=', 'stocks.stock_symbol')
+            ->where('buys.port_id', $port->port_id)
+            ->select('stocks.stock_symbol', DB::raw('SUM(buys.volume) AS total_buy_volume_stock'))
+            ->groupBy('stocks.stock_symbol')
+            ->orderBy('total_buy_volume_stock', 'desc')
+            ->get();
+
+        $total_sell_stock = DB::table('sells')
+            ->join('stock_prices', 'sells.stockp_id', '=', 'stock_prices.stockp_id')
+            ->join('stocks', 'stock_prices.stock_symbol', '=', 'stocks.stock_symbol')
+            ->where('sells.port_id', $port->port_id)
+            ->select('stocks.stock_symbol', DB::raw('SUM(sells.volume) AS total_sell_volume_stock'))
+            ->groupBy('stocks.stock_symbol')
+            ->orderBy('total_sell_volume_stock', 'desc')
+            ->get();
+
+        $total_average_buy_price = DB::table('buys')
+            ->join('stock_prices', 'buys.stockp_id', '=', 'stock_prices.stockp_id')
+            ->join('stocks', 'stock_prices.stock_symbol', '=', 'stocks.stock_symbol')
+            ->where('buys.port_id', $port->port_id)
+            ->select('stocks.stock_symbol', DB::raw('AVG(stock_prices.stockp_close) AS average_buy_price'))
+            ->groupBy('stocks.stock_symbol')
+            ->orderBy('average_buy_price', 'desc')
+            ->get();
+
+        $remaining_volume_eachstock = [];
+        $total_profit = 0;
+        $total_cost_stock = 0;
+        foreach ($total_buy_stock as $buy_item) {
+            $stock = $buy_item->stock_symbol;
+            $buy_volume = $buy_item->total_buy_volume_stock;
+
+            $sell_item = $total_sell_stock->where('stock_symbol', $stock)->first();
+            $sell_volume = $sell_item ? $sell_item->total_sell_volume_stock : 0;
+            $remaining_volume = $buy_volume - $sell_volume;
+
+            $stockitem = DB::table('stocks')->where('stock_symbol', $stock)->first();
+            $stockP = $stockitem->stock_current_price;
+
+            $avgitem = $total_average_buy_price->where('stock_symbol', $stock)->first();
+            $avgprice = $avgitem ? $avgitem->average_buy_price : 0;
+
+            $cost_stock = $remaining_volume*$avgprice;
+            $revenue = $remaining_volume*$stockP;
+            $profit = $revenue - $cost_stock;
+
+            
+            $total_cost_stock += $cost_stock;
+            $total_profit += $profit;
+
+            $remaining_volume_eachstock[] = [
+                'symbol' => $buy_item->stock_symbol,
+                'remaining_volume' => $remaining_volume,
+            ];
+        }
+
+        $percen_profit = ($total_profit / $total_cost_stock)*100;
+        return view('real_pages/user_dashboard', [
+            'amountmoney' => $total_buy,
+            'totalinvest' => $total_invest,
+            'amountport' => $total_buy_eachport,
+            'amountstock' =>  $total_buy_eachport_by_stock,
+            'percen' => $percentage,
+            'profit' => $total_profit,
+            'percen_profit' => $percen_profit
+        ], compact('port', 'user'));
+    }
+
+    public function portfolio(Request $request)
+    {
+        $port = $request->session()->get('port');
+        $user = $request->session()->get('user');
+
+        $total_buy_eachport = DB::table('buys')
+            ->join('ports', 'buys.port_id', '=', 'ports.port_id')
+            ->join('brokers', 'ports.broker_id', '=', 'brokers.broker_id')
+            ->where('ports.user_id', $port->user_id)
+            ->select('ports.port_id', 'brokers.broker_name', DB::raw('SUM(buys.volume) AS total_buy_volume'))
+            ->groupBy('ports.port_id', 'brokers.broker_name')
+            ->get();
+
+        $total_sell_eachport = DB::table('sells')
+            ->join('ports', 'sells.port_id', '=', 'ports.port_id')
+            ->join('brokers', 'ports.broker_id', '=', 'brokers.broker_id')
+            ->where('ports.user_id', $port->user_id)
+            ->select('ports.port_id', 'brokers.broker_name', DB::raw('SUM(sells.volume) AS total_sell_volume'))
+            ->groupBy('ports.port_id', 'brokers.broker_name')
+            ->get();
+
+        $remaining_volume_eachport = [];
+        $remaining_volume_account = 0;
+        foreach ($total_buy_eachport as $buy_item) {
+            $port_id = $buy_item->port_id;
+            $buy_volume = $buy_item->total_buy_volume;
+
+            $sell_item = $total_sell_eachport->where('port_id', $port_id)->first();
+            $sell_volume = $sell_item ? $sell_item->total_sell_volume : 0;
+
+            $remaining_volume = $buy_volume - $sell_volume;
+            $remaining_volume_account += $remaining_volume;
+            $remaining_volume_eachport[] = [
+                'port_id' => $port_id,
+                'broker_name' => $buy_item->broker_name,
+                'remaining_volume' => $remaining_volume,
+            ];
+        }
+
+        $percentage = [];
+        foreach ($remaining_volume_eachport as $buy) {
+            $percentage[$buy['port_id']] = ($buy['remaining_volume'] / $remaining_volume_account) * 100;
+        }
+
+        $total_buy_stock = DB::table('buys')
+            ->join('stock_prices', 'buys.stockp_id', '=', 'stock_prices.stockp_id')
+            ->join('stocks', 'stock_prices.stock_symbol', '=', 'stocks.stock_symbol')
+            ->where('buys.port_id', $port->port_id)
+            ->select('stocks.stock_symbol', DB::raw('SUM(buys.volume) AS total_buy_volume_stock'))
+            ->groupBy('stocks.stock_symbol')
+            ->orderBy('total_buy_volume_stock', 'desc')
+            ->get();
+
+        $total_sell_stock = DB::table('sells')
+            ->join('stock_prices', 'sells.stockp_id', '=', 'stock_prices.stockp_id')
+            ->join('stocks', 'stock_prices.stock_symbol', '=', 'stocks.stock_symbol')
+            ->where('sells.port_id', $port->port_id)
+            ->select('stocks.stock_symbol', DB::raw('SUM(sells.volume) AS total_sell_volume_stock'))
+            ->groupBy('stocks.stock_symbol')
+            ->orderBy('total_sell_volume_stock', 'desc')
+            ->get();
+
+        $total_average_buy_price = DB::table('buys')
+            ->join('stock_prices', 'buys.stockp_id', '=', 'stock_prices.stockp_id')
+            ->join('stocks', 'stock_prices.stock_symbol', '=', 'stocks.stock_symbol')
+            ->where('buys.port_id', $port->port_id)
+            ->select('stocks.stock_symbol', DB::raw('AVG(stock_prices.stockp_close) AS average_buy_price'))
+            ->groupBy('stocks.stock_symbol')
+            ->orderBy('average_buy_price', 'desc')
+            ->get();
+
+        $total_buy_volume_stock_eachport = DB::table('buys')
+            ->join('ports', 'buys.port_id', '=', 'ports.port_id')
+            ->join('stock_prices', 'buys.stockp_id', '=', 'stock_prices.stockp_id')
+            ->join('stocks', 'stock_prices.stock_symbol', '=', 'stocks.stock_symbol')
+            ->where('ports.user_id', $port->user_id)
+            ->select('stocks.stock_symbol', DB::raw('SUM(buys.volume) AS total_buy_volume_stock_eachport'))
+            ->groupBy('stocks.stock_symbol')
+            ->orderBy('total_buy_volume_stock_eachport', 'desc')
+            ->get();
+
+        $total_sell_volume_stock_eachport = DB::table('sells')
+            ->join('ports', 'sells.port_id', '=', 'ports.port_id')
+            ->join('stock_prices', 'sells.stockp_id', '=', 'stock_prices.stockp_id')
+            ->join('stocks', 'stock_prices.stock_symbol', '=', 'stocks.stock_symbol')
+            ->where('ports.user_id', $port->user_id)
+            ->select('stocks.stock_symbol', DB::raw('SUM(sells.volume) AS total_sell_volume_stock_eachport'))
+            ->groupBy('stocks.stock_symbol')
+            ->orderBy('total_sell_volume_stock_eachport', 'desc')
+            ->get();
+
+        $remaining_volume_eachstock = [];
+        foreach ($total_buy_stock as $buy_item) {
+            $stock = $buy_item->stock_symbol;
+            $buy_volume = $buy_item->total_buy_volume_stock;
+
+            $sell_item = $total_sell_stock->where('stock_symbol', $stock)->first();
+            $sell_volume = $sell_item ? $sell_item->total_sell_volume_stock : 0;
+
+            $remaining_volume = $buy_volume - $sell_volume;
+
+            $stockitem = DB::table('stocks')->where('stock_symbol', $stock)->first();
+            $stockP = $stockitem->stock_current_price;
+
+            $avgitem = $total_average_buy_price->where('stock_symbol', $stock)->first();
+            $avgprice = $avgitem ? $avgitem->average_buy_price : 0;
+
+            $buy_item_eachport = $total_buy_volume_stock_eachport->where('stock_symbol', $stock)->first();
+            $buy_volume_eachport = $buy_item_eachport ? $buy_item_eachport->total_buy_volume_stock_eachport : 0;
+            $sell_item_eachport = $total_sell_volume_stock_eachport->where('stock_symbol', $stock)->first();
+            $sell_volume_eachport = $sell_item_eachport ? $sell_item_eachport->total_sell_volume_stock_eachport : 0;
+
+            $remaining_volume_stock_eachport = $buy_volume_eachport - $sell_volume_eachport;
+
+            $remaining_volume_eachstock[] = [
+                'symbol' => $buy_item->stock_symbol,
+                'remaining_volume' => $remaining_volume,
+                'currentPrice' =>  $stockP,
+                'avg' => $avgprice,
+                'remaining_volume_eachport' => $remaining_volume_stock_eachport,
+            ];
+        }
+
+
+
+        return view('real_pages/user_portfolio', [
+            'volume_eachport' => $remaining_volume_eachport,
+            'volume_account' => $remaining_volume_account,
+            'percen' => $percentage,
+            'volume_eachstock' => $remaining_volume_eachstock,
+        ], compact('port', 'user'));
     }
 
     public function addfavorite($request)
@@ -184,13 +432,13 @@ class PortController extends Controller
                 DB::table('ports')
                     ->where('port_id', $port->port_id)
                     ->decrement('balance', $total_cost);
-
+                $port->balance = DB::table('ports')->where('port_id', $port->port_id)->value('balance');
                 // ส่งกลับข้อความหรือ redirect ตามที่คุณต้องการ
                 return view('real_pages.user_buy_result', [
                     'success' => true,
                     'stock_symbol' => $stock_symbol,
                     'volume' => $volume
-                ],compact('port', 'user', 'stock', 'broker', 'sector'));
+                ], compact('port', 'user', 'stock', 'broker', 'sector'));
             }
         }
 
@@ -202,7 +450,7 @@ class PortController extends Controller
             'volume' => $volume,
             'insufficient_funds' =>  $insufficient_funds,
             'stock_not_found' => (!$latest_stock_price_id)
-        ],compact('port', 'user', 'stock', 'broker', 'sector'));
+        ], compact('port', 'user', 'stock', 'broker', 'sector'));
     }
 
     public function presell(Request $request, $stock_symbol)
@@ -288,13 +536,14 @@ class PortController extends Controller
                 DB::table('ports')
                     ->where('port_id', $port->port_id)
                     ->increment('balance', $total_cost);
+                $port->balance = DB::table('ports')->where('port_id', $port->port_id)->value('balance');
 
                 // ส่งกลับข้อความหรือ redirect ตามที่คุณต้องการ
                 return view('real_pages.user_sell_result', [
                     'success' => true,
                     'stock_symbol' => $stock_symbol,
                     'volume' => $volume
-                ],compact('port', 'user', 'stock', 'broker', 'sector'));
+                ], compact('port', 'user', 'stock', 'broker', 'sector'));
             }
         }
 
@@ -306,6 +555,6 @@ class PortController extends Controller
             'volume' => $volume,
             'insufficient_funds' =>  $insufficient_funds,
             'stock_not_found' => (!$latest_stock_price_id)
-        ],compact('port', 'user', 'stock', 'broker', 'sector'));
+        ], compact('port', 'user', 'stock', 'broker', 'sector'));
     }
 }

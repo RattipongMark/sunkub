@@ -5,9 +5,11 @@
 @endsection
 
 @section('content')
+    
     <div class="guess_land1 ">
         <div class="grid grid-rows-3 gap-4">
             <div class="pt-80">
+                
                 <div class="flex justify-center pt-14">
                     <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">

@@ -19,14 +19,20 @@
             @csrf
             <button type="submit" class="pt-3"><img src="/images/ArrowLeft.svg" alt=""></button>
         </form>
-        <div class="ml-3">
-            <div class=" text-3xl text-white">
-                คำสั่งซื้อของคุณ
+        <div class="flex justify-between w-full pr-2 items-center">
+            <div class="ml-3">
+                <div class=" text-3xl text-white">
+                    คำสั่งซื้อของคุณ
+                </div>
+                <div class="text-base mt-2 text-thin text-gray-200 opacity-75">
+                    ข้อมูลที่แสดงคำสั่งซื้อหุ้นของคุณ
+                </div>
             </div>
-            <div class="text-base mt-2 text-thin text-gray-200 opacity-75">
-                ข้อมูลที่แสดงคำสั่งซื้อหุ้นของคุณ
+            <div class="text-white opacity-50">
+                จำนวนเงินในกระเป๋า : {{$port->balance}}
             </div>
         </div>
+
 
         <div class="bg-zinc-800 mt-3 rounded-t-xl h-screen px-5 pt-4">
             <form action="{{ route('buy', ['stock_symbol' => $stock->stock_symbol]) }}" method="POST">
