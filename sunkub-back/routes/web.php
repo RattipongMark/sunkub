@@ -52,5 +52,10 @@ Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
 })->middleware(['auth:admin', 'verified'])->name('admin.dashboard');
 
+Route::get('/wallet', function () {
+    return view('user_wallet_main');
+});
+
+
 
 require __DIR__.'/adminauth.php';
