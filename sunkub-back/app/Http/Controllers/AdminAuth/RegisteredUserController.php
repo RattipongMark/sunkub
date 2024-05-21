@@ -41,11 +41,10 @@ class RegisteredUserController extends Controller
             "email" => "required|email|unique:users",
             "tel" => "required",
             "password" => "required|confirmed",
-            "broker_id" => "required", 
         ]);
-        
 
-        $user = Admin::create([
+
+        $user = DB::table('admins')->insert([
             'fname' => $request['fname'],
             'lname' => $request['lname'],
             'gender' => $request['gender'],
@@ -55,17 +54,19 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request['password']),
         ]);
 
+        // Retrieve the inserted admin by email
+        $admin = DB::table('admins')->where('email', $request['email'])->first();
 
-        DB::table('view_admins')->insert([
-            'broker_id' => $request['broker_id'],
-            'admin_id' => $user->id,
-        ]);
+        if ($admin) {
+            // Fire the Registered event
+            event(new Registered($admin));
 
+            // Manually log in the admin using the retrieved data
+            Auth::guard('admin')->loginUsingId($admin->id);
 
-        event(new Registered($user));
+            return redirect(RouteServiceProvider::ADMIN_DASHBOARD);
+        }
 
-        Auth::login($user);
-
-        return redirect(RouteServiceProvider::ADMIN_DASHBOARD);
+        return back()->withErrors(['error' => 'Failed to create admin.']);
     }
 }

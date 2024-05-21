@@ -44,13 +44,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/trading', [PortController::class, 'menu1'])->name('trading');
     Route::get('/mydashboard', [PortController::class, 'dashboard'])->name('mydashboard');
     Route::get('/myport', [PortController::class, 'portfolio'])->name('portfolio');
+    Route::get('/history', [PortController::class, 'history'])->name('history');
 });
+
+Route::middleware(['auth:admin', 'verified'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/hi', [AdminController::class, 'index'])->name('hi');
+    Route::get('/create', [AdminController::class, 'create'])->name('create');
+    Route::post('/store', [AdminController::class, 'store'])->name('store');
+});
+
+
 
 require __DIR__.'/auth.php';
 
-Route::get('/admin/dashboard', function () {
-    return view('admin.dashboard');
-})->middleware(['auth:admin', 'verified'])->name('admin.dashboard');
+Route::get('/admin/dashboard', [AdminController::class, 'adminindex'])->middleware(['auth:admin', 'verified'])->name('admin.dashboard');
 
 Route::get('/wallet', function () {
     return view('user_wallet_main');

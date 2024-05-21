@@ -40,7 +40,7 @@ function getMarketStatus() {
         }
         else{
             return {
-                status: dayOfWeek,
+                status: 'Market is closed',
                 colorClass: 'market-closed'
             };
         }

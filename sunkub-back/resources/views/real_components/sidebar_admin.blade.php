@@ -15,19 +15,25 @@
         body {
             font-family: 'Kanit';
         }
+        .market-open {
+            color: rgb(74 222 128);
+        }
+
+        .market-closed {
+            color: rgb(248 113 113);
+        }
     </style>
 </head>
-
-<body>
+<body onload="activeshowpage()">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
-    <div class="bg-zinc-600 h-full">
-        <div class="flex flex-row relative h-full">
-            <div class="bg-neutral-800 drop-shadow-lg basis-1/4 w-full h-ful">
-                <div class="flex flex-col items-center sticky top-0 h-full">
-                    <img src="{{ url('images/LOGO.svg') }}" alt=""
-                        class="p-4">
+    <script src="{{ asset('/js/all.js') }}"></script>
+    <div class="bg-zinc-600 ">
+        <div class="flex flex-row relative min-h-screen">
+            <div class="sticky bg-neutral-800 drop-shadow-lg basis-1/4 w-full  ">
+                <div class="sticky flex flex-col items-center top-0">
+                    <img src="{{ url('images/LOGO.svg') }}" alt="" class="p-4">
                     </img>
                     <ul class="space-y-5 w-full">
                         <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block ">
@@ -53,15 +59,28 @@
                 <div class="h-full sticky top-0 navpo">
                     <div class="navbar bg-zinc-800 text-white pl-5 pr-5 ">
                         <div>@yield('contentnav')</div>
-                        <div class="dropdown dropdown-end pr-4 ">
-                            <div tabindex="0" role="button">TESTER</div>
+                        <div>
+                            <div class="flex flex-cols px-16 items-center">
+                                <div id="market-status" class="market-open">status</div>
+                                <script>
+                                    updateMarketStatus();
+                                </script>
+                                <div class="mx-2"> : </div>
+                                <div class="opacity-50"><iframe scrolling="no" frameborder="no" clocktype="html5"
+                                        style="overflow:hidden;border:0;margin:0;padding:0;width:240px;height:25px;"src="https://www.clocklink.com/html5embed.php?clock=018&timezone=GMT0700&color=gray&size=240&Title=&Message=&Target=&From=2024,1,1,0,0,0&DateFormat=dd / mm / yyyy DDD&TimeFormat=hh:mm:ss&Color=gray"></iframe>
+                                </div>
+                            </div>
+                            <div class="dropdown dropdown-end pr-4 ">
+                                <div tabindex="0" role="button" class="flex items-center">
+                                    <div class="px-2.5">{{ $admin->fname }}</div>
+                                    <div><img src="images/UserCircle.svg" alt=""></div>
+                                </div>
                             <ul tabindex="0"
                                 class="dropdown-content z-[1] menu p-2 shadow bg-violet-950 rounded-box w-36 mt-4">
-                                <li><a class="purple200" href="/loginport">สลับบัญชี</a></li>
                                 <li class="purple200">
-                                    <form method="POST" action="{{ route('logout') }}">
+                                    <form method="POST" action="{{ route('admin.logout') }}">
                                         @csrf
-                                        <a class="white200 underline-offset-0" href="route('logout')"
+                                        <a class="white200 underline-offset-0" href="route('admin.logout')"
                                             onclick="event.preventDefault();
                                     this.closest('form').submit();">
                                             {{ __('Log Out') }}

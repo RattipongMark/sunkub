@@ -15,10 +15,12 @@
         body {
             font-family: 'Kanit';
             background-color: #27272A;
-        }      
+        }
+
         .market-open {
             color: rgb(74 222 128);
         }
+
         .market-closed {
             color: rgb(248 113 113);
         }
@@ -51,15 +53,17 @@
                             </li>
                         </a>
                         <a href="/myport">
-                        <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
-                            <img src="{{ url('images/Clipboard.svg') }}" alt="" class="mr-5 pl-4"></img>
-                            <div>พอร์ตของฉัน</div>
-                        </li>
-                    </a>
+                            <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
+                                <img src="{{ url('images/Clipboard.svg') }}" alt="" class="mr-5 pl-4"></img>
+                                <div>พอร์ตของฉัน</div>
+                            </li>
+                        </a>
+                        <a href="/history">
                         <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
                             <img src="{{ url('images/Clock.svg') }}" alt="" class="mr-5 pl-4"></img>
-                            <a href="#">ประวัติการซื้อขาย</a>
+                            <div>ประวัติการซื้อขาย</div>
                         </li>
+                        </a>
                         <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
                             <img src="{{ url('images/Star.svg') }}" alt="" class="mr-5 pl-4"></img>
                             <a href="#">รายการหุ้นที่สนใจ</a>
@@ -76,20 +80,22 @@
                     <div class="navbar bg-zinc-800 text-white pl-5 pr-5 ">
                         <div>@yield('contentnav')</div>
                         <div>
-                            <div class="flex flex-cols px-16 items-center" >
+                            <div class="flex flex-cols px-16 items-center">
                                 <div id="market-status" class="market-open">status</div>
                                 <script>
                                     updateMarketStatus();
                                 </script>
                                 <div class="mx-2"> : </div>
-                                 <div class="opacity-50"><iframe scrolling="no" frameborder="no" clocktype="html5" style="overflow:hidden;border:0;margin:0;padding:0;width:240px;height:25px;"src="https://www.clocklink.com/html5embed.php?clock=018&timezone=GMT0700&color=gray&size=240&Title=&Message=&Target=&From=2024,1,1,0,0,0&DateFormat=dd / mm / yyyy DDD&TimeFormat=hh:mm:ss&Color=gray"></iframe></div>
+                                <div class="opacity-50"><iframe scrolling="no" frameborder="no" clocktype="html5"
+                                        style="overflow:hidden;border:0;margin:0;padding:0;width:240px;height:25px;"src="https://www.clocklink.com/html5embed.php?clock=018&timezone=GMT0700&color=gray&size=240&Title=&Message=&Target=&From=2024,1,1,0,0,0&DateFormat=dd / mm / yyyy DDD&TimeFormat=hh:mm:ss&Color=gray"></iframe>
+                                </div>
                             </div>
                             <div class="dropdown dropdown-end pr-4 ">
                                 <div tabindex="0" role="button" class="flex items-center">
                                     <div class="px-2.5">{{ $user->fname }}</div>
                                     <div><img src="images/UserCircle.svg" alt=""></div>
                                 </div>
-                               
+
                                 <ul tabindex="0"
                                     class="dropdown-content z-[1] menu p-2 shadow bg-violet-950 rounded-box w-36 mt-4">
                                     <li><a class="purple200" href="/loginport">สลับบัญชี</a></li>
@@ -106,7 +112,7 @@
                                 </ul>
                             </div>
                         </div>
-                       
+
                     </div>
                 </div>
                 <div class="h-fit">

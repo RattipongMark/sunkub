@@ -155,11 +155,11 @@ class PortController extends Controller
             $avgitem = $total_average_buy_price->where('stock_symbol', $stock)->first();
             $avgprice = $avgitem ? $avgitem->average_buy_price : 0;
 
-            $cost_stock = $remaining_volume*$avgprice;
-            $revenue = $remaining_volume*$stockP;
+            $cost_stock = $remaining_volume * $avgprice;
+            $revenue = $remaining_volume * $stockP;
             $profit = $revenue - $cost_stock;
 
-            
+
             $total_cost_stock += $cost_stock;
             $total_profit += $profit;
 
@@ -169,7 +169,7 @@ class PortController extends Controller
             ];
         }
 
-        $percen_profit = ($total_profit / $total_cost_stock)*100;
+        $percen_profit = ($total_profit / $total_cost_stock) * 100;
         return view('real_pages/user_dashboard', [
             'amountmoney' => $total_buy,
             'totalinvest' => $total_invest,
@@ -313,6 +313,34 @@ class PortController extends Controller
             'volume_eachstock' => $remaining_volume_eachstock,
         ], compact('port', 'user'));
     }
+
+    public function history(Request $request)
+    {
+        $port = $request->session()->get('port');
+        $user = $request->session()->get('user');
+    
+        $buy_stock = DB::table('buys')
+            ->join('stock_prices', 'buys.stockp_id', '=', 'stock_prices.stockp_id')
+            ->select('buys.volume as quantity', 'stock_prices.stock_symbol', 'stock_prices.stockp_close as price', 'buys.created_at as date', DB::raw('"buy" as type'))
+            ->where('buys.port_id', $port->port_id);
+    
+        $sell_stock = DB::table('sells')
+            ->join('stock_prices', 'sells.stockp_id', '=', 'stock_prices.stockp_id')
+            ->select( 'sells.volume as quantity', 'stock_prices.stock_symbol', 'stock_prices.stockp_close as price', 'sells.created_at as date', DB::raw('"sell" as type'))
+            ->where('sells.port_id', $port->port_id);
+    
+        // รวมผลลัพธ์และเรียงตามวันที่
+        $history = $buy_stock->union($sell_stock)
+            ->orderBy('date', 'desc')
+            ->get();
+    
+        return view('real_pages/user_history', [
+            'user' => $request->user(),
+            'history' => $history,
+        ]);
+    }
+    
+    
 
     public function addfavorite($request)
     {
