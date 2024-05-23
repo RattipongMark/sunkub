@@ -176,4 +176,24 @@ class AdminController extends Controller
         return redirect()->route('admin.showbroker');
     }
 
+    public function showTakecarebroker(Request $request)
+    {
+        $admin = $request->user();
+    
+        $brokers = DB::table('brokers')
+            ->join('view_admins', 'view_admins.broker_id', '=', 'brokers.broker_id')
+            ->where('view_admins.admin_id',$admin->id)->get();
+    
+        $userCount = DB::table('ports')
+            ->join('view_admins', 'ports.broker_id', '=', 'view_admins.broker_id')
+            ->where('view_admins.admin_id', $admin->id)
+            ->select('ports.broker_id', DB::raw('count(*) as user_count'))
+            ->groupBy('ports.broker_id')
+            ->get();
+
+        return view('admin_pages.admin_takecare_broker',[
+            'user_counts' => $userCount,
+        ], compact('admin', 'brokers'));
+
+    }
 }

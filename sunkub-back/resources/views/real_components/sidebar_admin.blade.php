@@ -15,6 +15,7 @@
         body {
             font-family: 'Kanit';
         }
+
         .market-open {
             color: rgb(74 222 128);
         }
@@ -24,6 +25,7 @@
         }
     </style>
 </head>
+
 <body onload="activeshowpage()">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
@@ -36,24 +38,30 @@
                     <img src="{{ url('images/LOGO.svg') }}" alt="" class="p-4">
                     </img>
                     <ul class="space-y-5 w-full">
-                        <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block ">
-                            <img src="https://via.placeholder.com/24x24" alt="" class="mr-5 pl-4"></img>
-                            <a href="#">แดชบอร์ด</a>
-                        </li>
+                        <a href="#">
+                            <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block ">
+                                <img src="{{ url('images/ChartPieSlice.svg') }}" alt="" class="mr-5 pl-4"></img>
+                                <div>แดชบอร์ด<div>
+                            </li>
+                        </a>
                         <a href="/admin/managebroker">
-                        <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
-                            <img src="https://via.placeholder.com/24x24" alt="" class="mr-5 pl-4"></img>
-                            <div>จัดการบริษัทตลาดหลักทรัพย์</div>
-                        </li>
-                    </a>
-                        <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
-                            <img src="https://via.placeholder.com/24x24" alt="" class="mr-5 pl-4"></img>
-                            <a href="#">จัดการหุ้น</a>
-                        </li>
-                        <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
-                            <img src="https://via.placeholder.com/24x24" alt="" class="mr-5 pl-4"></img>
-                            <a href="#">จัดการการดูแล</a>
-                        </li>
+                            <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
+                                <img src="{{url('images/office.svg')}}" alt="" class="mr-5 pl-4" width="18%"></img>
+                                <div>จัดการตลาดหลักทรัพย์</div>
+                            </li>
+                        </a>
+                        <a href="#">
+                            <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
+                                <img src="{{url('images/HandCoins.svg')}}" alt="" class="mr-5 pl-4"></img>
+                                <div>จัดการหุ้น</div>
+                            </li>
+                        </a>
+                        <a href="/admin/supervisebroker">
+                            <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
+                                <img src="{{url('images/Users.svg')}}" alt="" class="mr-5 pl-4"></img>
+                                <div>ตลาดหลักทรัพย์ที่ดูแล</div>
+                            </li>
+                        </a>
                     </ul>
                 </div>
             </div>
@@ -77,28 +85,28 @@
                                     <div class="px-2.5">{{ $admin->fname }}</div>
                                     <div><img src="images/UserCircle.svg" alt=""></div>
                                 </div>
-                            <ul tabindex="0"
-                                class="dropdown-content z-[1] menu p-2 shadow bg-violet-950 rounded-box w-36 mt-4">
-                                <li class="purple200">
-                                    <form method="POST" action="{{ route('admin.logout') }}">
-                                        @csrf
-                                        <a class="white200 underline-offset-0" href="route('admin.logout')"
-                                            onclick="event.preventDefault();
+                                <ul tabindex="0"
+                                    class="dropdown-content z-[1] menu p-2 shadow bg-violet-950 rounded-box w-36 mt-4">
+                                    <li class="purple200">
+                                        <form method="POST" action="{{ route('admin.logout') }}">
+                                            @csrf
+                                            <a class="white200 underline-offset-0" href="route('admin.logout')"
+                                                onclick="event.preventDefault();
                                     this.closest('form').submit();">
-                                            {{ __('Log Out') }}
-                                        </a>
-                                    </form>
-                                </li>
-                            </ul>
+                                                {{ __('Log Out') }}
+                                            </a>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="h-auto">
-                    @yield('content')
+                    <div class="h-auto">
+                        @yield('content')
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 </body>
 
 </html>

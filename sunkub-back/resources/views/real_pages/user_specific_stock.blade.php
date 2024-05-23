@@ -73,16 +73,16 @@
                 </script>
             </div>
             <!-- TradingView Widget END -->
-            <div class="flex gap-4 px-56 h-24 my-16 justify-center">
+            <div class="flex gap-4 px-56 h-18 my-16 justify-center">
                 <form action="{{ route('presell', ['stock_symbol' => $stock->stock_symbol]) }}" method="GET" class="w-full h-full">
                     @csrf
                     <input type="hidden" name="stock_symbol" value="{{ $stock->stock_symbol }}">
-                    <button type="submit" class="py-4 text-3xl bg-red-400 hover:bg-red-700 w-full text-white text-center content-center rounded-xl">SELL</button>
+                    <button type="submit" class="py-2.5 text-xl bg-red-400 hover:bg-red-700 w-full text-white text-center content-center rounded-xl">SELL</button>
                 </form>
                 <form action="{{ route('prebuy', ['stock_symbol' => $stock->stock_symbol]) }}" method="GET" class="h-full w-full">
                     @csrf
                     <input type="hidden" name="stock_symbol" value="{{ $stock->stock_symbol }}">
-                    <button type="submit" class="py-4 text-3xl bg-green-400 hover:bg-green-700 w-full text-white text-center content-center rounded-xl">BUY</button>
+                    <button type="submit" class="py-2.5 text-xl bg-green-400 hover:bg-green-700 w-full text-white text-center content-center rounded-xl">BUY</button>
                 </form>
             </div>
         </div>
