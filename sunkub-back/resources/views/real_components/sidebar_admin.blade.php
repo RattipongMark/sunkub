@@ -29,10 +29,10 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
     <script src="{{ asset('/js/all.js') }}"></script>
-    <div class="bg-zinc-600 ">
-        <div class="flex flex-row relative min-h-screen">
-            <div class="sticky bg-neutral-800 drop-shadow-lg basis-1/4 w-full  ">
-                <div class="sticky flex flex-col items-center top-0">
+    <div class="bg-zinc-600 h-auto min-h-lvh">
+        <div class="flex flex-row relative h-full min-h-lvh">
+            <div class="sticky bg-neutral-800 drop-shadow-lg basis-1/4 w-full h-auto  min-h-lvh">
+                <div class="sticky flex flex-col items-center top-0 ">
                     <img src="{{ url('images/LOGO.svg') }}" alt="" class="p-4">
                     </img>
                     <ul class="space-y-5 w-full">
@@ -55,8 +55,8 @@
                     </ul>
                 </div>
             </div>
-            <div class="grid w-full h-full">
-                <div class="h-full sticky top-0 navpo">
+            <div class="grid w-full ">
+                <div class="sticky top-0 navpo">
                     <div class="navbar bg-zinc-800 text-white pl-5 pr-5 ">
                         <div>@yield('contentnav')</div>
                         <div>
@@ -91,7 +91,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="h-fit">
+                <div class="h-auto">
                     @yield('content')
                 </div>
             </div>
