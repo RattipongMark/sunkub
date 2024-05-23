@@ -585,4 +585,13 @@ class PortController extends Controller
             'stock_not_found' => (!$latest_stock_price_id)
         ], compact('port', 'user', 'stock', 'broker', 'sector'));
     }
+
+    public function showwallet(Request $request) {
+        $port = $request->session()->get('port');
+        $user = $request->session()->get('user');
+
+
+        return view('real_pages/wallet_deposit_confirm', compact('port', 'user'));
+    }
+
 }

@@ -64,14 +64,12 @@
                             <div>ประวัติการซื้อขาย</div>
                         </li>
                         </a>
-                        <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
-                            <img src="{{ url('images/Star.svg') }}" alt="" class="mr-5 pl-4"></img>
-                            <a href="#">รายการหุ้นที่สนใจ</a>
-                        </li>
+                        <a href="/mywallet">
                         <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
                             <img src="{{ url('images/Wallet.svg') }}" alt="" class="mr-5 pl-4"></img>
-                            <a href="#">กระเป๋าตังค์</a>
+                            <div>กระเป๋าตังค์</div>
                         </li>
+                    </a>
                     </ul>
                 </div>
             </div>

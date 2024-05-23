@@ -39,7 +39,7 @@
                                 </div>
                             </div>
                             <div class="pt-12 pl-12 pr-12">
-                                <button class="btn btn-purple w-full" width="100%">Button</button>
+                                <button class="btn btn-purple w-full" width="100%">Login</button>
                             </div>
                             <div class="grid grid-cols-3 pt-12 pl-12 pr-12">
                                 <div class="flex-none white200">หากยังไม่มีบัญชี</div>

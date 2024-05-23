@@ -51,13 +51,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/mydashboard', [PortController::class, 'dashboard'])->name('mydashboard');
     Route::get('/myport', [PortController::class, 'portfolio'])->name('portfolio');
     Route::get('/history', [PortController::class, 'history'])->name('history');
+
+    Route::get('/mywallet', [PortController::class, 'showwallet'])->name('showwallet');
 });
 
 Route::middleware(['auth:admin', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/hi', [AdminController::class, 'index'])->name('hi');
 
+    Route::get('/managebroker', [AdminController::class, 'showbroker'])->name('showbroker');
     Route::get('/addbroker', [AdminController::class, 'pageaddbroker'])->name('pageaddbroker');
     Route::post('/addbroker', [AdminController::class, 'addbroker'])->name('addbroker');
+
+    Route::get('/supervisebroker', [AdminController::class, 'showTakecarebroker'])->name('showTakecarebroker');
 });
 
 
