@@ -23,18 +23,10 @@
 @endsection
 
 @section('content')
-    <div class="flex flex-col h-screen w-full" id="loaditem">
-        <div class="lds-ellipsis">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>
 
-    <div class="bg-neutral-700 mx-5 mt-5 rounded-t-xl content fadecontent h-full" id="pagecontent">
+    <div class="bg-neutral-700 mx-5 mt-5 rounded-t-xl h-full min-h-dvh">
         <div class="pt-3 ml-4 ">
-            <a href=""><img src="{{ url('images/backArrow.svg') }}" class="size-6"></a>
+            <a href="/admin/managebroker"><img src="{{ url('images/backArrow.svg') }}" class="size-6"></a>
         </div>
         <div class="grid grid-row-2 mx-5 ">
             <div class="ml-3">
@@ -45,7 +37,7 @@
                     กรุณากรอกข้อมูลของตลาดหลักทรัพย์ที่ต้องการเพิ่มเข้าระบบ
                 </div>
             </div>
-            <div class="bg-zinc-800 mt-3 rounded-t-xl flex flex-col px-48 py-16 ">
+            <div class="bg-zinc-800 mt-3 rounded-t-xl flex flex-col px-48 py-16  min-h-dvh">
                 @if (session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
@@ -102,7 +94,7 @@
                     </div>
 
                     <div class="mt-16 flex justify-center">
-                        <button class="btn bg-green-400 hover:bg-green-600 w-full border-0 rounde-lg"
+                        <button class="btn bg-green-400 hover:bg-green-600 w-full border-0 rounde-lg text-white"
                             type="submit">submit</button>
                     </div>
 

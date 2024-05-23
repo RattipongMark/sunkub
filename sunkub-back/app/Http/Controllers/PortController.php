@@ -585,4 +585,5 @@ class PortController extends Controller
             'stock_not_found' => (!$latest_stock_price_id)
         ], compact('port', 'user', 'stock', 'broker', 'sector'));
     }
+    
 }

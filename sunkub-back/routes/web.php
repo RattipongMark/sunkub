@@ -50,6 +50,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth:admin', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/hi', [AdminController::class, 'index'])->name('hi');
 
+    Route::get('/managebroker', [AdminController::class, 'showbroker'])->name('showbroker');
     Route::get('/addbroker', [AdminController::class, 'pageaddbroker'])->name('pageaddbroker');
     Route::post('/addbroker', [AdminController::class, 'addbroker'])->name('addbroker');
 });

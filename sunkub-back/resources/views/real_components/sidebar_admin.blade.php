@@ -40,10 +40,12 @@
                             <img src="https://via.placeholder.com/24x24" alt="" class="mr-5 pl-4"></img>
                             <a href="#">แดชบอร์ด</a>
                         </li>
+                        <a href="/admin/managebroker">
                         <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
                             <img src="https://via.placeholder.com/24x24" alt="" class="mr-5 pl-4"></img>
-                            <a href="#">จัดการบริษัทตลาดหลักทรัพย์</a>
+                            <div>จัดการบริษัทตลาดหลักทรัพย์</div>
                         </li>
+                    </a>
                         <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
                             <img src="https://via.placeholder.com/24x24" alt="" class="mr-5 pl-4"></img>
                             <a href="#">จัดการหุ้น</a>

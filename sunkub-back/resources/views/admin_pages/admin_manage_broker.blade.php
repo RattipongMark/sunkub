@@ -26,22 +26,23 @@ $bgColors = ['bg-zinc-800', 'bg-zinc-600']; //define background colors
     <div class="bg-neutral-700 mx-5 mt-2 rounded-xl h-screen">
         <div class="grid grid-row-2 mt-4">
             <div class="mt-3 rounded-xl  grid grid-rows-auto">
+                
                 <div class="grid grid-cols-3 place-items-center">
                     <p class="text-white text-xl">ชื่อตลาดหลักทรัพย์</p>
                     <p class="text-white text-xl">Email</p>
                     <p class="text-white text-xl">เบอร์โทรติดต่อ</p>
                 </div>
-                @for ($i = 0; $i < 3; $i++)
-                <div class="grid grid-cols-3 place-items-center mt-3 {{ $bgColors[$i % 2] }} p-3">
-                    <p class="text-violet-400 text-xl ">SUNKUB.com</p>
-                    <p class="text-white text-xl pl-2">sunkub@mail.com</p>
-                    <p class="text-white text-xl pl-6">0999999999</p>
+                @foreach ($brokers as $idx => $broker)
+                <div class="grid grid-cols-3 place-items-center mt-3 {{ $bgColors[$idx % 2] }} p-3">
+                    <p class="text-violet-400 text-xl ">{{$broker->broker_name}}</p>
+                    <p class="text-white text-xl pl-2">{{$broker->broker_mail}}</p>
+                    <p class="text-white text-xl pl-6">{{$broker->broker_contact}}</p>
                 </div>
-                @endfor
+                @endforeach
             </div>
         </div>
         <div class="mt-3 dashedBG">
-            <a href=""><img src="images/PlusCircle.svg"></a>
+            <a href="/admin/addbroker"><img src="{{url('images/PlusCircle.svg')}}"></a>
         </div>
     </div>
 @endsection
