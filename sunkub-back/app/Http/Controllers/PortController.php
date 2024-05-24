@@ -593,7 +593,7 @@ class PortController extends Controller
         $user = $request->session()->get('user');
 
 
-        return view('real_pages/wallet_deposit_confirm', compact('port', 'user'));
+        return view('real_pages/user_wallet_main', compact('port', 'user'));
     }
 
 }
