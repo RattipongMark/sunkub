@@ -69,6 +69,7 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->name('admin.')->
     Route::get('/sectorbuy', [AdminController::class, 'adminsectorbuy'])->name('adminsectorbuy');
     Route::get('/sectorsell', [AdminController::class, 'adminsectorsell'])->name('adminsectorsell');
 
+    Route::get('/managestocks', [AdminController::class, 'showstock'])->name('showstock');
     Route::get('/addstock', [AdminController::class, 'pageaddstock'])->name('pageaddstock');
     Route::post('/addstock', [AdminController::class, 'addstock'])->name('addstock');
 });

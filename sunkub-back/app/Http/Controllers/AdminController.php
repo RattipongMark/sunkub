@@ -341,6 +341,15 @@ class AdminController extends Controller
         return redirect()->route('admin.showbroker');
     }
 
+    public function showstock(Request $request)
+    {
+        $admin = $request->user();
+
+        $stocks = DB::table('stocks')->orderBy('created_at')->get();
+
+        return view('admin_pages.admin_stockmanage', compact('admin', 'stocks'));
+    }
+
     public function pageaddstock(Request $request)
     {
         $admin = $request->user();
@@ -406,7 +415,7 @@ class AdminController extends Controller
         }
 
 
-        return redirect()->route('admin.showbroker');
+        return redirect()->route('admin.showstock');
     }
 
     public function showTakecarebroker(Request $request)
