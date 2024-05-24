@@ -40,6 +40,7 @@ class AdminController extends Controller
             ->where('view_admins.admin_id', $adminId)
             ->groupBy('brokers.broker_name')
             ->orderByDesc('total_volume')
+            ->take(3)
             ->get();
 
         $broksellmost = DB::table('sells')
@@ -51,18 +52,69 @@ class AdminController extends Controller
             ->where('view_admins.admin_id', $adminId)
             ->groupBy('brokers.broker_name')
             ->orderByDesc('total_volume')
+            ->take(3)
             ->get();
-            
-        return view('admin_pages.admin_dashboard',[
+
+        $sectorbuymost = DB::table('buys')
+            ->join('stock_prices', 'buys.stockp_id', '=', 'stock_prices.stockp_id')
+            ->join('stocks', 'stock_prices.stock_symbol', '=', 'stocks.stock_symbol')
+            ->join('sectors', 'stocks.sector_id', '=', 'sectors.sector_id')
+            ->join('ports', 'buys.port_id', '=', 'ports.port_id')
+            ->join('brokers', 'ports.broker_id', '=', 'brokers.broker_id')
+            ->join('view_admins', 'brokers.broker_id', '=', 'view_admins.broker_id')
+            ->select('sectors.sector_name', DB::raw('SUM(buys.volume) as total_volume'))
+            ->where('view_admins.admin_id', $adminId)
+            ->groupBy('sectors.sector_name')
+            ->orderBy('total_volume')
+            ->take(3)
+            ->get();
+
+        $totalVolumesectorbuymost = 0;
+        foreach ($sectorbuymost as $sector) {
+            $totalVolumesectorbuymost += $sector->total_volume;
+        }
+        $percentagebuy = [];
+        foreach ($sectorbuymost as $sector) {
+            $percentagebuy[$sector->sector_name] = ($sector->total_volume / $totalVolumesectorbuymost) * 100;
+        }
+        
+        $sectorsellmost = DB::table('sells')
+            ->join('stock_prices', 'sells.stockp_id', '=', 'stock_prices.stockp_id')
+            ->join('stocks', 'stock_prices.stock_symbol', '=', 'stocks.stock_symbol')
+            ->join('sectors', 'stocks.sector_id', '=', 'sectors.sector_id')
+            ->join('ports', 'sells.port_id', '=', 'ports.port_id')
+            ->join('brokers', 'ports.broker_id', '=', 'brokers.broker_id')
+            ->join('view_admins', 'brokers.broker_id', '=', 'view_admins.broker_id')
+            ->select('sectors.sector_name', DB::raw('SUM(sells.volume) as total_volume'))
+            ->where('view_admins.admin_id', $adminId)
+            ->groupBy('sectors.sector_name')
+            ->orderBy('total_volume')
+            ->take(3)
+            ->get();
+
+        $totalVolumesectorsellmost = 0;
+        foreach ($sectorsellmost as $sector) {
+            $totalVolumesectorsellmost += $sector->total_volume;
+        }
+        $percentagesell = [];
+        foreach ($sectorsellmost as $sector) {
+            $percentagesell[$sector->sector_name] = ($sector->total_volume / $totalVolumesectorsellmost) * 100;
+        }
+
+        return view('admin_pages.admin_dashboard', [
             'topbuybroker' => $brokbuymost,
-            'topsellbroker' => $broksellmost
+            'topsellbroker' => $broksellmost,
+            'topbuysec' => $sectorbuymost,
+            'topsellsec' => $sectorsellmost,
+            'percenbuy' => $percentagebuy,
+            'percensell' => $percentagesell,
         ], compact('admin'));
     }
 
     public function buythemost(Request $request)
     {
         $admin = $request->user();
-        
+
         $adminId = $admin->id;
 
         $results = DB::table('buys')
@@ -93,7 +145,7 @@ class AdminController extends Controller
     public function sellthemost(Request $request)
     {
         $admin = $request->user();
-        
+
         $adminId = $admin->id;
 
         $results = DB::table('sells')
@@ -120,6 +172,71 @@ class AdminController extends Controller
         return view('admin_pages.admin_sellthemost_broker', compact('admin', 'rankedResults'));
     }
 
+    public function adminsectorbuy(Request $request) {
+        $admin = $request->user();
+
+        $adminId = $admin->id;
+
+
+        $results = DB::table('buys')
+            ->join('stock_prices', 'buys.stockp_id', '=', 'stock_prices.stockp_id')
+            ->join('stocks', 'stock_prices.stock_symbol', '=', 'stocks.stock_symbol')
+            ->join('sectors', 'stocks.sector_id', '=', 'sectors.sector_id')
+            ->join('ports', 'buys.port_id', '=', 'ports.port_id')
+            ->join('brokers', 'ports.broker_id', '=', 'brokers.broker_id')
+            ->join('view_admins', 'brokers.broker_id', '=', 'view_admins.broker_id')
+            ->select('brokers.broker_name', 'sectors.sector_name', DB::raw('SUM(buys.volume) as total_volume'))
+            ->where('view_admins.admin_id', $adminId)
+            ->groupBy('brokers.broker_name', 'sectors.sector_name')
+            ->orderBy('brokers.broker_name')
+            ->orderByDesc('total_volume')
+            ->get();
+
+        $rankedResults = [];
+        foreach ($results as $result) {
+            if (!isset($rankedResults[$result->broker_name])) {
+                $rankedResults[$result->broker_name] = [];
+            }
+            if (count($rankedResults[$result->broker_name]) < 3) {
+                $rankedResults[$result->broker_name][] = $result;
+            }
+        }
+
+        return view('admin_pages.admin_buythemost_sector', compact('admin', 'rankedResults'));
+    }
+
+    public function adminsectorsell(Request $request) {
+        $admin = $request->user();
+
+        $adminId = $admin->id;
+
+
+        $results = DB::table('sells')
+            ->join('stock_prices', 'sells.stockp_id', '=', 'stock_prices.stockp_id')
+            ->join('stocks', 'stock_prices.stock_symbol', '=', 'stocks.stock_symbol')
+            ->join('sectors', 'stocks.sector_id', '=', 'sectors.sector_id')
+            ->join('ports', 'sells.port_id', '=', 'ports.port_id')
+            ->join('brokers', 'ports.broker_id', '=', 'brokers.broker_id')
+            ->join('view_admins', 'brokers.broker_id', '=', 'view_admins.broker_id')
+            ->select('brokers.broker_name', 'sectors.sector_name', DB::raw('SUM(sells.volume) as total_volume'))
+            ->where('view_admins.admin_id', $adminId)
+            ->groupBy('brokers.broker_name', 'sectors.sector_name')
+            ->orderBy('brokers.broker_name')
+            ->orderByDesc('total_volume')
+            ->get();
+
+        $rankedResults = [];
+        foreach ($results as $result) {
+            if (!isset($rankedResults[$result->broker_name])) {
+                $rankedResults[$result->broker_name] = [];
+            }
+            if (count($rankedResults[$result->broker_name]) < 3) {
+                $rankedResults[$result->broker_name][] = $result;
+            }
+        }
+
+        return view('admin_pages.admin_sellthemost_sector', compact('admin', 'rankedResults'));
+    }
 
     public function showBroker(Request $request)
     {
@@ -284,7 +401,6 @@ class AdminController extends Controller
                         'created_at' => now(),
                         'updated_at' => now()
                     ]);
-
                 }
             }
         }
