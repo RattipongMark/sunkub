@@ -41,64 +41,63 @@
                 </div>
             </a>
             <a href="/admin/sellthemost">
-            <div class="h-72 bg-neutral-700 rounded-xl px-5 py-4 hover:outline outline-offset-2 outline-purple-200">
-                <p class="text-white text-2xl">หุ้นที่ถูกขายมากที่สุดในแต่ละบริษัทหลักทรัพย์</p>
-                <p class="text-sm mt-2 text-gray-200  opacity-50">แสดงหุ้น 3 อันดับ</p>
-                <div class="px-20 mb-3 place-content-center	">
-                    @foreach ($topsellbroker as $idx => $broker)
-                        <div class="flex justify-between items-center px-3 mt-3">
-                            <p class="text-lg {{ $fontColors[$idx % 3] }}">{{ $broker->broker_name }}</p>
-                            <p class="text-lg {{ $fontColors[$idx % 3] }}">{{ $broker->total_volume }} หุ้น</p>
+                <div class="h-72 bg-neutral-700 rounded-xl px-5 py-4 hover:outline outline-offset-2 outline-purple-200">
+                    <p class="text-white text-2xl">หุ้นที่ถูกขายมากที่สุดในแต่ละบริษัทหลักทรัพย์</p>
+                    <p class="text-sm mt-2 text-gray-200  opacity-50">แสดงหุ้น 3 อันดับ</p>
+                    <div class="px-20 mb-3 place-content-center	">
+                        @foreach ($topsellbroker as $idx => $broker)
+                            <div class="flex justify-between items-center px-3 mt-3">
+                                <p class="text-lg {{ $fontColors[$idx % 3] }}">{{ $broker->broker_name }}</p>
+                                <p class="text-lg {{ $fontColors[$idx % 3] }}">{{ $broker->total_volume }} หุ้น</p>
+                            </div>
+                            <hr class="border-white border-solid border-1 mt-1 w-full ">
+                        @endforeach
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 pb-8">
+            <a href="/admin/sectorbuy">
+            <div class="px-5 py-4 flex h-64 bg-neutral-700  rounded-xl hover:outline outline-offset-2 outline-purple-200 ">
+                <div class="flex flex-col h-full w-full">
+                    <p class="text-white text-2xl">จำนวนหุ้นที่ถูกซื้อในแต่ละ sector</p>
+                    <p class="text-sm mt-2 text-gray-200  opacity-50">แสดงหุ้น 3 อันดับ</p>
+                    <div class="px-4 flex flex-rows-3 justify-between flex-grow w-full mt-4">
+                        @foreach ($topbuysec as $sector)
+                        <div class="flex flex-col items-center ">
+                            <div class="flex mt-auto text-white">{{ $sector->total_volume }} หุ้น</div>
+                            <div class="flex mt-0 text-black bg-violet-300 w-24"
+                                style="height: {{ number_format($percenbuy[$sector->sector_name], 2) }}%;"></div>
+                            <div class="flex items-center justify-center pb-2 text-black bg-violet-300 w-24 text-base">
+                                {{ $sector->sector_name }}</div>
                         </div>
-                        <hr class="border-white border-solid border-1 mt-1 w-full ">
                     @endforeach
+                    </div>
+                    <div class="flex h-2 bg-purple-400 mt-auto w-full"></div>
                 </div>
             </div>
         </a>
-        </div>
-        <div class="grid grid-cols-2 gap-4 pb-8">
-            <div class=" bg-neutral-700 rounded-xl px-5 py-4 hover:outline outline-offset-2 outline-purple-200 ">
-                <p class="text-white text-2xl">จำนวนหุ้นที่ถูกซื้อในแต่ละ sector</p>
-                <p class="text-sm mt-2 text-gray-200  opacity-50">แสดงหุ้น 3 อันดับ</p>
-                <div class="grid grid-cols-3 h-32">
-                    @php
-                        $data = [30, 50, 70];
-                        $sector = ['IT', 'Media', 'Food'];
-                        $align = ['items-end', 'items-center', 'items-start'];
-                    @endphp
-                    @for ($i = 0; $i < count($data); $i++)
-                        <div class="flex flex-col justify-end {{ $align[$i] }}">
-                            <p class="text-white mb-1">{{ $data[$i] }}%</p>
-                            <div class="relative w-14 bg-violet-400 " style="height: {{ $data[$i] }}%;">
-                                <p class="absolute bottom-0 w-14 text-center text-black flex flex-col">{{ $sector[$i] }}
-                                </p>
-                            </div>
+        <a href="/admin/sectorsell">
+            <div class="px-5 py-4 flex h-64 bg-neutral-700  rounded-xl hover:outline outline-offset-2 outline-purple-200 ">
+                <div class="flex flex-col h-full w-full">
+                    <p class="text-white text-2xl">จำนวนหุ้นที่ถูกขายในแต่ละ sector</p>
+                    <p class="text-sm mt-2 text-gray-200  opacity-50">แสดงหุ้น 3 อันดับ</p>
+                    <div class="px-4 flex flex-rows-3 justify-between flex-grow w-full mt-4">
+                        @foreach ($topsellsec as $sector)
+                        <div class="flex flex-col items-center ">
+                            <div class="flex mt-auto text-white">{{ $sector->total_volume }} หุ้น</div>
+                            <div class="flex mt-0 text-black bg-violet-300 w-24"
+                                style="height: {{ number_format($percensell[$sector->sector_name], 2) }}%;"></div>
+                            <div class="flex items-center justify-center pb-2 text-black bg-violet-300 w-24 text-base">
+                                {{ $sector->sector_name }}</div>
                         </div>
-                    @endfor{{-- replace the bar chart here --}}
+                    @endforeach
+                    </div>
+                    <div class="flex h-2 bg-purple-400 mt-auto w-full"></div>
                 </div>
-                <div class="flex h-2 bg-violet-400 mt-auto ml-5 mr-5"></div>
             </div>
-            <div class="bg-neutral-700 rounded-xl px-5 py-4 hover:outline outline-offset-2 outline-purple-200">
-                <p class="text-white text-2xl">จำนวนหุ้นที่ถูกขายในแต่ละ sector</p>
-                <p class="text-sm mt-2 text-gray-200 opacity-50">แสดงหุ้น 3 อันดับ</p>
-                <div class="grid grid-cols-3 h-32">
-                    @php
-                        $data = [30, 50, 70];
-                        $sector = ['IT', 'Media', 'Food'];
-                        $align = ['items-end', 'items-center', 'items-start'];
-                    @endphp
-                    @for ($i = 0; $i < count($data); $i++)
-                        <div class="flex flex-col justify-end {{ $align[$i] }}">
-                            <p class="text-white mb-1">{{ $data[$i] }}%</p>
-                            <div class="relative w-14 bg-violet-400 " style="height: {{ $data[$i] }}%;">
-                                <p class="absolute bottom-0 w-14 text-center text-black flex flex-col">{{ $sector[$i] }}
-                                </p>
-                            </div>
-                        </div>
-                    @endfor{{-- replace the bar chart here --}}
-                </div>
-                <div class="flex h-2 bg-violet-400 mt-auto ml-5 mr-5"></div>
-            </div>
+        </a>
         </div>
     </div>
 @endsection
