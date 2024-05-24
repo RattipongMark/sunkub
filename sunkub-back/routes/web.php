@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PortController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DepositController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,6 +22,11 @@ Route::get('/', function () {
 
 
 Route::get('/dashboard', [AdminController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+
+use App\Http\Controllers\PaymentController;
+
+Route::get('/deposit', [DepositController::class, 'index']);
+Route::post('/process-deposit', [DepositController::class, 'processDeposit'])->name('process.deposit');
 
 Route::middleware('auth')->group(function () {
     Route::get('/hi', [AdminController::class, 'index']);
