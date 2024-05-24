@@ -13,7 +13,7 @@ use Illuminate\Http\JsonResponse;
 
 class AdminController extends Controller
 {
-    public function index(Request $request): View
+    public function index1(Request $request)
     {
         $userId = Auth::id();
 

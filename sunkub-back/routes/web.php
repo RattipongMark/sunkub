@@ -29,7 +29,7 @@ Route::get('/deposit', [DepositController::class, 'index']);
 Route::post('/process-deposit', [DepositController::class, 'processDeposit'])->name('process.deposit');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/hi', [AdminController::class, 'index']);
+    Route::get('/hi', [AdminController::class, 'index1']);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

@@ -18,31 +18,26 @@ class PortController extends Controller
 
     public function checkPort(Request $request)
     {
-        // ตรวจสอบว่ามีข้อมูล user_broker และ password หรือไม่
         if (!$request->has(['user_broker', 'password'])) {
             return response()->json(['message' => 'Missing required parameters'], 400);
         }
 
-        // ดึงข้อมูลจาก request
         $user_broker = $request->input('user_broker');
         $password = $request->input('password');
 
-        // ค้นหา Port จากข้อมูลที่รับมา
+
+        // "select * from `ports` where `user_broker` = $user_broker and `password` = $password"
         $port = DB::table('ports')
             ->where('user_broker', $user_broker)
             ->where('password', $password)
             ->first();
 
-        // ตรวจสอบว่าพอร์ตพบหรือไม่
         if ($port) {
-            // หากพอร์ตพบ ให้ดึงข้อมูลของผู้ใช้จากตาราง users ด้วย user_id
             $user_check = DB::table('users')->find($port->user_id);
             $user = $request->user();
-            // ตรวจสอบว่าพบข้อมูลผู้ใช้หรือไม่
             if ($user->id == $user_check->id) {
                 $request->session()->put('port', $port);
                 $request->session()->put('user', $user);
-                // ส่งข้อมูลพอร์ตและข้อมูลผู้ใช้ไปยังหน้า myport
                 return view('real_pages/user_index', compact('port', 'user'));
             } else {
                 return response()->json(['message' => 'User not found'], 404);
@@ -63,22 +58,39 @@ class PortController extends Controller
 
     public function dashboard(Request $request)
     {
-
         $port = $request->session()->get('port');
         $user = $request->session()->get('user');
         $port->balance = DB::table('ports')->where('port_id', $port->port_id)->value('balance');
 
+        // SELECT SUM(buys.volume * stock_prices.stockp_close) AS total
+        // FROM buys
+        // JOIN stock_prices ON buys.stockp_id = stock_prices.stockp_id
+        // WHERE buys.port_id = $port->port_id;
         $total_buy = DB::table('buys')
             ->join('stock_prices', 'buys.stockp_id', '=', 'stock_prices.stockp_id')
             ->where('buys.port_id', $port->port_id)
             ->sum(DB::raw('buys.volume * stock_prices.stockp_close'));
 
+
+        // SELECT SUM(buys.volume * stock_prices.stockp_close)
+        // FROM buys
+        // JOIN stock_prices ON buys.stockp_id = stock_prices.stockp_id
+        // JOIN ports ON buys.port_id = ports.port_id
+        // WHERE ports.user_id = $port->user_id;
         $total_invest = DB::table('buys')
             ->join('stock_prices', 'buys.stockp_id', '=', 'stock_prices.stockp_id')
             ->join('ports', 'buys.port_id', '=', 'ports.port_id')
             ->where('ports.user_id', $port->user_id)
             ->sum(DB::raw('buys.volume * stock_prices.stockp_close'));
 
+        
+        // SELECT ports.port_id, brokers.broker_name, SUM(buys.volume * stock_prices.stockp_close) AS total_buy_amount
+        // FROM buys
+        // JOIN stock_prices ON buys.stockp_id = stock_prices.stockp_id
+        // JOIN ports ON buys.port_id = ports.port_id
+        // JOIN brokers ON ports.broker_id = brokers.broker_id
+        // WHERE ports.user_id = $port->user_id
+        // GROUP BY ports.port_id, brokers.broker_name;
         $total_buy_eachport = DB::table('buys')
             ->join('stock_prices', 'buys.stockp_id', '=', 'stock_prices.stockp_id')
             ->join('ports', 'buys.port_id', '=', 'ports.port_id')
@@ -88,6 +100,15 @@ class PortController extends Controller
             ->groupBy('ports.port_id', 'brokers.broker_name')
             ->get();
 
+        
+        // SELECT stocks.stock_symbol, SUM(buys.volume * stock_prices.stockp_close) AS total_buy_amount
+        // FROM buys
+        // JOIN stock_prices ON buys.stockp_id = stock_prices.stockp_id
+        // JOIN stocks ON stock_prices.stock_symbol = stocks.stock_symbol
+        // JOIN ports ON buys.port_id = ports.port_id
+        // WHERE ports.port_id = $port->port_id
+        // GROUP BY stocks.stock_symbol
+        // ORDER BY total_buy_amount DESC;
         $total_buy_eachport_by_stock = DB::table('buys')
             ->join('stock_prices', 'buys.stockp_id', '=', 'stock_prices.stockp_id')
             ->join('stocks', 'stock_prices.stock_symbol', '=', 'stocks.stock_symbol')
