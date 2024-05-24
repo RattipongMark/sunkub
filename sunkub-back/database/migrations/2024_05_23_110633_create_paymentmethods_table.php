@@ -4,28 +4,25 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreatePaymentmethodsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('paymentmethods', function (Blueprint $table) {
-            $table->id('paymentmethod_id');
-            $table->unsignedBigInteger('user_id'); 
-            $table->string('paymentmethod_name');
+            $table->string('card_number')->primary(); // Primary key
+            $table->unsignedBigInteger('user_id');
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->integer('expiry_month')->nullable();
+            $table->integer('expiry_year')->nullable();
+            $table->string('cvv')->nullable();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('paymentmethods');
     }
-};
+}
