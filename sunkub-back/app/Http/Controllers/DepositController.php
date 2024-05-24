@@ -11,8 +11,11 @@ class DepositController extends Controller
 {
     public function index()
     {
-        $ports = DB::table('ports')->get(); // Fetch portfolios from 'ports' table
-        return view('deposit_form', compact('ports'));
+        $userId = 1; // Static user ID for demonstration purposes
+        $ports = DB::table('ports')->where('user_id', $userId)->get(); // Fetch portfolios for user ID 1
+        $paymentMethods = DB::table('paymentmethods')->where('user_id', $userId)->get(); // Fetch payment methods for user ID 1
+
+        return view('deposit_form', compact('ports', 'paymentMethods'));
     }
 
     public function processDeposit(Request $request)
@@ -21,6 +24,7 @@ class DepositController extends Controller
         $validator = Validator::make($request->all(), [
             'port_ids.*' => 'required|exists:ports,port_id', // Check if each port_id exists in the ports table
             'port_amounts.*' => 'nullable|numeric|min:0', // Allow empty or numeric values for port amounts
+            'paymentmethod_id' => 'required|exists:paymentmethods,paymentmethod_id', // Check if the payment method exists
         ]);
 
         if ($validator->fails()) {
@@ -31,8 +35,9 @@ class DepositController extends Controller
         DB::beginTransaction();
 
         try {
-            $userId = 1;//Auth::id(); // Get the authenticated user's ID
+            $userId = 1; // Static user ID for demonstration purposes
             $timestamp = now(); // Current timestamp
+            $paymentmethodId = $request->input('paymentmethod_id'); // Get selected payment method ID
 
             // Initialize variables for deposit details
             $totalAmount = 0;
@@ -61,6 +66,7 @@ class DepositController extends Controller
             $deposit_id = DB::table('deposit_details')->insertGetId([
                 'user_id' => $userId,
                 'payment_amount' => $totalAmount,
+                'paymentmethod_id' => $paymentmethodId, // Add the selected payment method ID
                 'timestamp' => $timestamp,
             ]);
 
