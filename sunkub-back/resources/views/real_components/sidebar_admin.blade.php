@@ -38,7 +38,7 @@
                     <img src="{{ url('images/LOGO.svg') }}" alt="" class="p-4">
                     </img>
                     <ul class="space-y-5 w-full">
-                        <a href="#">
+                        <a href="dashboard">
                             <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block ">
                                 <img src="{{ url('images/ChartPieSlice.svg') }}" alt="" class="mr-5 pl-4"></img>
                                 <div>แดชบอร์ด<div>

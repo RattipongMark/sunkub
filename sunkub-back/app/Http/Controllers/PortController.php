@@ -168,8 +168,10 @@ class PortController extends Controller
                 'remaining_volume' => $remaining_volume,
             ];
         }
-
-        $percen_profit = ($total_profit / $total_cost_stock) * 100;
+        if($total_cost_stock != 0)
+            $percen_profit = ($total_profit / $total_cost_stock) * 100;
+        else
+            $percen_profit = 0;
         return view('real_pages/user_dashboard', [
             'amountmoney' => $total_buy,
             'totalinvest' => $total_invest,

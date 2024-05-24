@@ -57,17 +57,20 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->name('admin.')->
     Route::post('/addbroker', [AdminController::class, 'addbroker'])->name('addbroker');
 
     Route::get('/supervisebroker', [AdminController::class, 'showTakecarebroker'])->name('showTakecarebroker');
+
+    Route::get('/buythemost', [AdminController::class, 'buythemost'])->name('buythemost');
+    Route::get('/sellthemost', [AdminController::class, 'sellthemost'])->name('sellthemost');
+
+    Route::get('/addstock', [AdminController::class, 'pageaddstock'])->name('pageaddstock');
+    Route::post('/addstock', [AdminController::class, 'addstock'])->name('addstock');
 });
 
 
 
 require __DIR__.'/auth.php';
 
-Route::get('/admin/dashboard', [AdminController::class, 'adminindex'])->middleware(['auth:admin', 'verified'])->name('admin.dashboard');
+Route::get('/admin/dashboard', [AdminController::class, 'admindasboard'])->middleware(['auth:admin', 'verified'])->name('admin.dashboard');
 
-Route::get('/wallet', function () {
-    return view('user_wallet_main');
-});
 
 
 
