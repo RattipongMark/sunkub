@@ -15,11 +15,11 @@ class CreateDepositDetailsTable extends Migration
             $table->id('deposit_id');
             $table->unsignedBigInteger('user_id');
             $table->double('payment_amount', 15, 4);
-            $table->unsignedBigInteger('paymentmethod_id');
+            $table->string('card_number');
             $table->timestamp('timestamp')->useCurrent();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('paymentmethod_id')->references('paymentmethod_id')->on('paymentmethods')->onDelete('cascade');
+            $table->foreign('card_number')->references('card_number')->on('paymentmethods')->onDelete('cascade');
         });
     }
 
