@@ -7,20 +7,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
-
 class DepositController extends Controller
 {
-<<<<<<< HEAD
     public function index(Request $request)
     {
         $user = $request->user(); 
         $userId = $user->id;
-=======
-    public function index1(Request $request)
-    {
-        $user = $request->user();
-        $userId = $user->id; // Static user ID for demonstration purposes
->>>>>>> ff78b26cc4bfcb0820b0d6b2795f0d4960fd9de5
         $ports = DB::table('ports')->where('user_id', $userId)->get(); // Fetch portfolios for user ID 1
         $paymentMethods = DB::table('paymentmethods')->where('user_id', $userId)->get(); // Fetch payment methods for user ID 1
 
