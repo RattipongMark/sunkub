@@ -50,7 +50,7 @@
                                 <div>จัดการตลาดหลักทรัพย์</div>
                             </li>
                         </a>
-                        <a href="#">
+                        <a href="/admin/managestocks">
                             <li class="flex items-center text-white hover:bg-zinc-500 px-3 py-4 block">
                                 <img src="{{url('images/HandCoins.svg')}}" alt="" class="mr-5 pl-4"></img>
                                 <div>จัดการหุ้น</div>

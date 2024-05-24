@@ -7,12 +7,17 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
+
 class DepositController extends Controller
 {
-    public function index()
+    public function depositpage(Request $request)
     {
-        $ports = DB::table('ports')->get(); // Fetch portfolios from 'ports' table
-        return view('deposit_form', compact('ports'));
+        $user = $request->user();
+        $userId = $user->id; // Static user ID for demonstration purposes
+        $ports = DB::table('ports')->where('user_id', $userId)->get(); // Fetch portfolios for user ID 1
+        $paymentMethods = DB::table('paymentmethods')->where('user_id', $userId)->get(); // Fetch payment methods for user ID 1
+
+        return view('real_pages/user_wallet_deposit_details', compact('user','ports', 'paymentMethods'));
     }
 
     public function processDeposit(Request $request)
@@ -21,6 +26,8 @@ class DepositController extends Controller
         $validator = Validator::make($request->all(), [
             'port_ids.*' => 'required|exists:ports,port_id', // Check if each port_id exists in the ports table
             'port_amounts.*' => 'nullable|numeric|min:0', // Allow empty or numeric values for port amounts
+            'paymentmethod_id' => 'required', // Payment method selection is required
+            'new_payment_method_name' => 'nullable|string|max:255', // Validate new payment method name
         ]);
 
         if ($validator->fails()) {
@@ -31,8 +38,20 @@ class DepositController extends Controller
         DB::beginTransaction();
 
         try {
-            $userId = 1;//Auth::id(); // Get the authenticated user's ID
+            $userId = 1; // Static user ID for demonstration purposes
             $timestamp = now(); // Current timestamp
+
+            // Check if a new payment method needs to be added
+            $paymentmethodId = $request->input('paymentmethod_id');
+            if ($paymentmethodId === 'new') {
+                $newPaymentMethodName = $request->input('new_payment_method_name');
+                $paymentmethodId = DB::table('paymentmethods')->insertGetId([
+                    'user_id' => $userId,
+                    'paymentmethod_name' => $newPaymentMethodName,
+                    'created_at' => $timestamp,
+                    'updated_at' => $timestamp,
+                ]);
+            }
 
             // Initialize variables for deposit details
             $totalAmount = 0;
@@ -61,6 +80,7 @@ class DepositController extends Controller
             $deposit_id = DB::table('deposit_details')->insertGetId([
                 'user_id' => $userId,
                 'payment_amount' => $totalAmount,
+                'paymentmethod_id' => $paymentmethodId, // Add the selected payment method ID
                 'timestamp' => $timestamp,
             ]);
 

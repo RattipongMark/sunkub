@@ -21,7 +21,7 @@ Route::get('/', function () {
 });
 
 
-Route::get('/dashboard', [AdminController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [AdminController::class, 'index1'])->middleware(['auth', 'verified'])->name('dashboard');
 
 use App\Http\Controllers\PaymentController;
 
@@ -29,7 +29,7 @@ Route::get('/deposit', [DepositController::class, 'index']);
 Route::post('/process-deposit', [DepositController::class, 'processDeposit'])->name('process.deposit');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/hi', [AdminController::class, 'index']);
+    Route::get('/hi', [AdminController::class, 'index1']);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -53,6 +53,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/history', [PortController::class, 'history'])->name('history');
 
     Route::get('/mywallet', [PortController::class, 'showwallet'])->name('showwallet');
+    Route::get('/deposit_money', [DepositController::class, 'depositpage'])->name('depositpage');
+    
 });
 
 Route::middleware(['auth:admin', 'verified'])->prefix('admin')->name('admin.')->group(function () {
@@ -66,7 +68,10 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->name('admin.')->
 
     Route::get('/buythemost', [AdminController::class, 'buythemost'])->name('buythemost');
     Route::get('/sellthemost', [AdminController::class, 'sellthemost'])->name('sellthemost');
+    Route::get('/sectorbuy', [AdminController::class, 'adminsectorbuy'])->name('adminsectorbuy');
+    Route::get('/sectorsell', [AdminController::class, 'adminsectorsell'])->name('adminsectorsell');
 
+    Route::get('/managestocks', [AdminController::class, 'showstock'])->name('showstock');
     Route::get('/addstock', [AdminController::class, 'pageaddstock'])->name('pageaddstock');
     Route::post('/addstock', [AdminController::class, 'addstock'])->name('addstock');
 });

@@ -36,9 +36,11 @@
             </div>
         </div>
         <div class="flex flex-row justify-end mr-6 gap-2 mb-8">
+        <a href="/deposit_money">
          <button class="w-24 h-12 rounded-xl bg-green-400 hover:bg-green-500 text-white font-bold text-xl ">
                 ฝาก
         </button>
+    </a>
         <button class="w-24 h-12 rounded-xl bg-red-400 hover:bg-red-500 text-white font-bold text-xl ">
                 ถอน
         </button>
