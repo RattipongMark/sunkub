@@ -79,7 +79,7 @@
                         <div>@yield('contentnav')</div>
                         <div>
                             <div class="flex flex-cols px-16 items-center">
-                                <div id="market-status" class="market-open">status</div>
+                                <div id="market-status" class="text-red-400">Market Close</div>
                                 <script>
                                     updateMarketStatus();
                                 </script>

@@ -42,7 +42,7 @@
             <div class="flex flex-col h-full">
                 <div class="grid grid-cols-3 flex-grow">
                     @foreach ($volume_eachport as $port)
-                        <div class="flex flex-col items-center ml-20">
+                        <div class="flex flex-col items-center">
                             <div class="flex mt-auto text-white">{{ $port['remaining_volume'] }} หุ้น</div>
                             <div class="flex mt-0 text-black bg-violet-300 w-24"
                                 style="height: {{ $percen[$port['port_id']] }}%;"></div>

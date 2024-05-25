@@ -23,7 +23,7 @@
     <div class="flex flex-row justfify-between">
         <div class="flex-1">
             <div class="text-white text-3xl font-bold pt-6 pl-5">
-                หุ้นที่ถูกซื้อมากที่สุด
+                หุ้นที่ถูกขายมากที่สุด
             </div>
             <div class="text-white pt-2 pl-5 opacity-75">
                 ข้อมูลหุ้นที่ถูกซื้อมากที่สุด
