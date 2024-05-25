@@ -26,7 +26,6 @@ Route::get('/dashboard', [AdminController::class, 'index1'])->middleware(['auth'
 use App\Http\Controllers\PaymentController;
 
 Route::get('/deposit', [DepositController::class, 'index']);
-Route::post('/process-deposit', [DepositController::class, 'processDeposit'])->name('process.deposit');
 
 Route::middleware('auth')->group(function () {
     Route::get('/hi', [AdminController::class, 'index1']);
@@ -54,6 +53,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/mywallet', [PortController::class, 'showwallet'])->name('showwallet');
     Route::get('/deposit_money', [DepositController::class, 'depositpage'])->name('depositpage');
+    Route::post('/process-deposit', [DepositController::class, 'processDeposit'])->name('process.deposit');
+
     
 });
 

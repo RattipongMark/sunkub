@@ -11,7 +11,7 @@
 @section('content')
     <div class="bgregist">
         <div class="flex flex-col items-center justify-center px-6  mx-auto md:h-screen lg:py-10">
-            <h1 href="#" class="flex items-center mb-6 text-5xl font-semibold text-gray-900 dark:text-white">
+            <h1 href="#" class="flex items-center mb-6 text-5xl font-semibold text-white">
                 ลงทะเบียน
             </h1>
             <div class=" logincard ">

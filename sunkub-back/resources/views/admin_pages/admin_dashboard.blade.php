@@ -8,7 +8,7 @@
 
 
 @section('title')
-    Dashboard
+    Admin Dashboard
 @endsection
 
 @section('contentnav')
@@ -67,9 +67,9 @@
                         @foreach ($topbuysec as $sector)
                         <div class="flex flex-col items-center ">
                             <div class="flex mt-auto text-white">{{ $sector->total_volume }} หุ้น</div>
-                            <div class="flex mt-0 text-black bg-violet-300 w-24"
+                            <div class="flex mt-0 text-black bg-violet-300 w-24 "
                                 style="height: {{ number_format($percenbuy[$sector->sector_name], 2) }}%;"></div>
-                            <div class="flex items-center justify-center pb-2 text-black bg-violet-300 w-24 text-base">
+                            <div class="flex items-center justify-center pb-2 text-black bg-violet-300 w-24 text-base text-center ">
                                 {{ $sector->sector_name }}</div>
                         </div>
                     @endforeach
@@ -89,7 +89,7 @@
                             <div class="flex mt-auto text-white">{{ $sector->total_volume }} หุ้น</div>
                             <div class="flex mt-0 text-black bg-violet-300 w-24"
                                 style="height: {{ number_format($percensell[$sector->sector_name], 2) }}%;"></div>
-                            <div class="flex items-center justify-center pb-2 text-black bg-violet-300 w-24 text-base">
+                            <div class="flex items-center justify-center pb-2 text-black bg-violet-300 w-24 text-base text-center ">
                                 {{ $sector->sector_name }}</div>
                         </div>
                     @endforeach

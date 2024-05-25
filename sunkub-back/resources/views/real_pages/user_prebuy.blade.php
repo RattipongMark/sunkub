@@ -106,8 +106,8 @@
                         disabled>Buy</button>
                     <dialog id="my_modal_1" class="modal">
                         <div class="modal-box">
-                            <h3 class="font-bold text-lg">โปรดยืนยันคำสั่งซื้ออีกครั้ง</h3>
-                            <p id="order-summary" class="py-4">คำสั่งซื้อของคุณคือ {{ $stock->stock_symbol }} จำนวน 0
+                            <h3 class="font-bold text-lg text-white">โปรดยืนยันคำสั่งซื้ออีกครั้ง</h3>
+                            <p id="order-summary" class="py-4 text-white">คำสั่งซื้อของคุณคือ {{ $stock->stock_symbol }} จำนวน 0
                                 หุ้น
                                 ที่ราคา 0.00 USD</p>
                             <div class="modal-action">

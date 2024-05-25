@@ -31,8 +31,8 @@
             </div>
            
             <div class="flex self-center mr-16 gap-4">
-                <div class = "text-white text-3xl "> 123,456 </div>
-                <div class = "text-white text-3xl "> ฿ </div>
+                <div class = "text-white text-3xl "> {{ $port->balance}} </div>
+                <div class = "text-white text-3xl "> $ </div>
             </div>
         </div>
         <div class="flex flex-row justify-end mr-6 gap-2 mb-8">

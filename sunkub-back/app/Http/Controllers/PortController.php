@@ -132,6 +132,14 @@ class PortController extends Controller
             }
         }
 
+        // SELECT stocks.stock_symbol, 
+        // SUM(buys.volume) AS total_buy_volume_stock
+        // FROM buys
+        // JOIN stock_prices ON buys.stockp_id = stock_prices.stockp_id
+        // JOIN stocks ON stock_prices.stock_symbol = stocks.stock_symbol
+        // WHERE buys.port_id = $port->port_id
+        // GROUP BY stocks.stock_symbol
+        // ORDER BY total_buy_volume_stock DESC;
         $total_buy_stock = DB::table('buys')
             ->join('stock_prices', 'buys.stockp_id', '=', 'stock_prices.stockp_id')
             ->join('stocks', 'stock_prices.stock_symbol', '=', 'stocks.stock_symbol')
@@ -141,6 +149,15 @@ class PortController extends Controller
             ->orderBy('total_buy_volume_stock', 'desc')
             ->get();
 
+
+        // SELECT stocks.stock_symbol, 
+        // SUM(sells.volume) AS total_sell_volume_stock
+        // FROM sells
+        // JOIN stock_prices ON sells.stockp_id = stock_prices.stockp_id
+        // JOIN stocks ON stock_prices.stock_symbol = stocks.stock_symbol
+        // WHERE sells.port_id = $port->port_id
+        // GROUP BY stocks.stock_symbol
+        // ORDER BY total_sell_volume_stock DESC;
         $total_sell_stock = DB::table('sells')
             ->join('stock_prices', 'sells.stockp_id', '=', 'stock_prices.stockp_id')
             ->join('stocks', 'stock_prices.stock_symbol', '=', 'stocks.stock_symbol')
@@ -150,6 +167,15 @@ class PortController extends Controller
             ->orderBy('total_sell_volume_stock', 'desc')
             ->get();
 
+
+        // SELECT stocks.stock_symbol, 
+        // AVG(stock_prices.stockp_close) AS average_buy_price
+        // FROM buys
+        // JOIN stock_prices ON buys.stockp_id = stock_prices.stockp_id
+        // JOIN stocks ON stock_prices.stock_symbol = stocks.stock_symbol
+        // WHERE buys.port_id = ?
+        // GROUP BY stocks.stock_symbol
+        // ORDER BY average_buy_price DESC     
         $total_average_buy_price = DB::table('buys')
             ->join('stock_prices', 'buys.stockp_id', '=', 'stock_prices.stockp_id')
             ->join('stocks', 'stock_prices.stock_symbol', '=', 'stocks.stock_symbol')
@@ -209,6 +235,14 @@ class PortController extends Controller
         $port = $request->session()->get('port');
         $user = $request->session()->get('user');
 
+        // SELECT  ports.port_id, 
+        //         brokers.broker_name, 
+        //         SUM(buys.volume) AS total_buy_volume
+        // FROM buys
+        // JOIN ports ON buys.port_id = ports.port_id
+        // JOIN brokers ON ports.broker_id = brokers.broker_id
+        // WHERE ports.user_id = $port->user_id
+        // GROUP BY ports.port_id, brokers.broker_name;
         $total_buy_eachport = DB::table('buys')
             ->join('ports', 'buys.port_id', '=', 'ports.port_id')
             ->join('brokers', 'ports.broker_id', '=', 'brokers.broker_id')
@@ -217,6 +251,15 @@ class PortController extends Controller
             ->groupBy('ports.port_id', 'brokers.broker_name')
             ->get();
 
+
+        // SELECT  ports.port_id, 
+        //         brokers.broker_name, 
+        //         SUM(sells.volume) AS total_sell_volume
+        // FROM sells
+        // JOIN ports ON sells.port_id = ports.port_id
+        // JOIN brokers ON ports.broker_id = brokers.broker_id
+        // WHERE ports.user_id = $port->user_id
+        // GROUP BY ports.port_id, brokers.broker_name;
         $total_sell_eachport = DB::table('sells')
             ->join('ports', 'sells.port_id', '=', 'ports.port_id')
             ->join('brokers', 'ports.broker_id', '=', 'brokers.broker_id')
@@ -248,6 +291,15 @@ class PortController extends Controller
             $percentage[$buy['port_id']] = ($buy['remaining_volume'] / $remaining_volume_account) * 100;
         }
 
+
+        // SELECT  stocks.stock_symbol, 
+        //         SUM(buys.volume) AS total_buy_volume_stock
+        // FROM buys
+        // JOIN stock_prices ON buys.stockp_id = stock_prices.stockp_id
+        // JOIN stocks ON stock_prices.stock_symbol = stocks.stock_symbol
+        // WHERE buys.port_id = $port->port_id
+        // GROUP BY stocks.stock_symbol
+        // ORDER BY total_buy_volume_stock DESC;
         $total_buy_stock = DB::table('buys')
             ->join('stock_prices', 'buys.stockp_id', '=', 'stock_prices.stockp_id')
             ->join('stocks', 'stock_prices.stock_symbol', '=', 'stocks.stock_symbol')
@@ -257,6 +309,15 @@ class PortController extends Controller
             ->orderBy('total_buy_volume_stock', 'desc')
             ->get();
 
+    
+        // SELECT  stocks.stock_symbol, 
+        //         SUM(sells.volume) AS total_sell_volume_stock
+        // FROM sells
+        // JOIN stock_prices ON sells.stockp_id = stock_prices.stockp_id
+        // JOIN stocks ON stock_prices.stock_symbol = stocks.stock_symbol
+        // WHERE sells.port_id = $port->port_id
+        // GROUP BY stocks.stock_symbol
+        // ORDER BY total_sell_volume_stock DESC;
         $total_sell_stock = DB::table('sells')
             ->join('stock_prices', 'sells.stockp_id', '=', 'stock_prices.stockp_id')
             ->join('stocks', 'stock_prices.stock_symbol', '=', 'stocks.stock_symbol')
@@ -266,6 +327,15 @@ class PortController extends Controller
             ->orderBy('total_sell_volume_stock', 'desc')
             ->get();
 
+
+        // SELECT  stocks.stock_symbol, 
+        //         AVG(stock_prices.stockp_close) AS average_buy_price
+        // FROM buys
+        // JOIN stock_prices ON buys.stockp_id = stock_prices.stockp_id
+        // JOIN stocks ON stock_prices.stock_symbol = stocks.stock_symbol
+        // WHERE buys.port_id = $port->port_id
+        // GROUP BY stocks.stock_symbol
+        // ORDER BY average_buy_price DESC;
         $total_average_buy_price = DB::table('buys')
             ->join('stock_prices', 'buys.stockp_id', '=', 'stock_prices.stockp_id')
             ->join('stocks', 'stock_prices.stock_symbol', '=', 'stocks.stock_symbol')
@@ -275,6 +345,16 @@ class PortController extends Controller
             ->orderBy('average_buy_price', 'desc')
             ->get();
 
+
+        // SELECT  stocks.stock_symbol, 
+        //         SUM(buys.volume) AS total_buy_volume_stock_eachport
+        // FROM buys
+        // JOIN ports ON buys.port_id = ports.port_id
+        // JOIN stock_prices ON buys.stockp_id = stock_prices.stockp_id
+        // JOIN stocks ON stock_prices.stock_symbol = stocks.stock_symbol
+        // WHERE ports.user_id = $port->user_id
+        // GROUP BY stocks.stock_symbol
+        // ORDER BY total_buy_volume_stock_eachport DESC;     
         $total_buy_volume_stock_eachport = DB::table('buys')
             ->join('ports', 'buys.port_id', '=', 'ports.port_id')
             ->join('stock_prices', 'buys.stockp_id', '=', 'stock_prices.stockp_id')
@@ -285,6 +365,16 @@ class PortController extends Controller
             ->orderBy('total_buy_volume_stock_eachport', 'desc')
             ->get();
 
+        
+        // SELECT  stocks.stock_symbol, 
+        //         SUM(sells.volume) AS total_sell_volume_stock_eachport
+        // FROM sells
+        // JOIN ports ON sells.port_id = ports.port_id
+        // JOIN stock_prices ON sells.stockp_id = stock_prices.stockp_id
+        // JOIN stocks ON stock_prices.stock_symbol = stocks.stock_symbol
+        // WHERE ports.user_id = $port->user_id
+        // GROUP BY stocks.stock_symbol
+        // ORDER BY total_sell_volume_stock_eachport DESC;
         $total_sell_volume_stock_eachport = DB::table('sells')
             ->join('ports', 'sells.port_id', '=', 'ports.port_id')
             ->join('stock_prices', 'sells.stockp_id', '=', 'stock_prices.stockp_id')
@@ -305,6 +395,9 @@ class PortController extends Controller
 
             $remaining_volume = $buy_volume - $sell_volume;
 
+            // SELECT * FROM stocks
+            // WHERE stock_symbol = '$stock'
+            // LIMIT 1;
             $stockitem = DB::table('stocks')->where('stock_symbol', $stock)->first();
             $stockP = $stockitem->stock_current_price;
 
@@ -342,17 +435,55 @@ class PortController extends Controller
         $port = $request->session()->get('port');
         $user = $request->session()->get('user');
     
+        // SELECT  buys.volume AS quantity,
+        //         stock_prices.stock_symbol,
+        //         stock_prices.stockp_close AS price,
+        //         buys.created_at AS date,
+        //         'buy' AS type
+        // FROM buys
+        // JOIN stock_prices ON buys.stockp_id = stock_prices.stockp_id
+        // WHERE buys.port_id = $port->port_id;
         $buy_stock = DB::table('buys')
             ->join('stock_prices', 'buys.stockp_id', '=', 'stock_prices.stockp_id')
             ->select('buys.volume as quantity', 'stock_prices.stock_symbol', 'stock_prices.stockp_close as price', 'buys.created_at as date', DB::raw('"buy" as type'))
             ->where('buys.port_id', $port->port_id);
     
+
+        // SELECT  sells.volume AS quantity,
+        //         stock_prices.stock_symbol,
+        //         stock_prices.stockp_close AS price,
+        //         sells.created_at AS date,
+        //         'sell' AS type
+        // FROM sells
+        // JOIN stock_prices ON sells.stockp_id = stock_prices.stockp_id
+        // WHERE sells.port_id = $port->port_id;
         $sell_stock = DB::table('sells')
             ->join('stock_prices', 'sells.stockp_id', '=', 'stock_prices.stockp_id')
             ->select( 'sells.volume as quantity', 'stock_prices.stock_symbol', 'stock_prices.stockp_close as price', 'sells.created_at as date', DB::raw('"sell" as type'))
             ->where('sells.port_id', $port->port_id);
     
-        // รวมผลลัพธ์และเรียงตามวันที่
+            // (
+            //     SELECT buys.volume AS quantity,
+            //            stock_prices.stock_symbol,
+            //            stock_prices.stockp_close AS price,
+            //            buys.created_at AS date,
+            //            'buy' AS type
+            //     FROM buys
+            //     JOIN stock_prices ON buys.stockp_id = stock_prices.stockp_id
+            //     WHERE buys.port_id = $port->port_id
+                
+            //     UNION
+                
+            //     SELECT sells.volume AS quantity,
+            //            stock_prices.stock_symbol,
+            //            stock_prices.stockp_close AS price,
+            //            sells.created_at AS date,
+            //            'sell' AS type
+            //     FROM sells
+            //     JOIN stock_prices ON sells.stockp_id = stock_prices.stockp_id
+            //     WHERE sells.port_id = $port->port_id
+            // )
+            // ORDER BY date DESC;
         $history = $buy_stock->union($sell_stock)
             ->orderBy('date', 'desc')
             ->get();
@@ -363,23 +494,6 @@ class PortController extends Controller
         ]);
     }
     
-    
-
-    public function addfavorite($request)
-    {
-        $request->validate([
-            "stock_symbol" => "required",
-            "port_id" => "required",
-        ]);
-
-        $insertData = [
-            'stock_symbol' => $request['stock_symbol'],
-            'port_id' => $request['port_id'],
-        ];
-
-        DB::table('favorites')->insert($insertData);
-    }
-
 
     public function showstock(Request $request)
     {
@@ -390,18 +504,21 @@ class PortController extends Controller
             return redirect()->back()->with('error', 'Invalid port data');
         }
 
-        // ดึงข้อมูล stock ที่มี broker_id เท่ากับ broker_id ในพอร์ต
+
+        // SELECT * FROM view_stocks
+        // JOIN stocks ON view_stocks.stock_symbol = stocks.stock_symbol
+        // WHERE view_stocks.broker_id = $port->broker_id;        
         $stocks = DB::table('view_stocks')
             ->where('broker_id', $port->broker_id)
             ->join('stocks', 'view_stocks.stock_symbol', '=', 'stocks.stock_symbol')
             ->get();
-        // ส่งข้อมูล port และ user ไปยังหน้า myport
+
         return view('real_pages.user_stock', compact('port', 'user', 'stocks'));
     }
 
     public function showspecificstock(Request $request, $stock_symbol)
     {
-        // รับ stock id จาก request
+        
         $stock = DB::table('stocks')->where('stock_symbol', $stock_symbol)->first();
         $port = $request->session()->get('port');
         $user = $request->session()->get('user');
@@ -447,7 +564,11 @@ class PortController extends Controller
         $broker = DB::table('brokers')->where('broker_id', $port->broker_id)->first();
         $sector = DB::table('sectors')->where('sector_id', $stock->sector_id)->first();
 
-        // หา ID ของหุ้นล่าสุดจากตาราง stock_prices โดยใช้ stock_symbol
+        // SELECT stockp_id
+        // FROM stock_prices
+        // WHERE stock_symbol = $stock_symbol
+        // ORDER BY updated_at DESC
+        // LIMIT 1;        
         $latest_stock_price_id = DB::table('stock_prices')
             ->where('stock_symbol', $stock_symbol)
             ->orderBy('updated_at', 'desc')
@@ -456,11 +577,19 @@ class PortController extends Controller
         // ตรวจสอบว่ามีข้อมูลราคาหุ้นล่าสุดหรือไม่
         if ($latest_stock_price_id) {
             // หายอดเงินคงเหลือในพอร์ต
+
+            // SELECT balance
+            // FROM ports
+            // WHERE port_id = $port->port_id;            
             $balance = DB::table('ports')
                 ->where('port_id', $port->port_id)
                 ->value('balance');
 
             // หาราคาหุ้นล่าสุด
+
+            // SELECT stockp_close
+            // FROM stock_prices
+            // WHERE stockp_id = $latest_stock_price_id;
             $stockp_close = DB::table('stock_prices')
                 ->where('stockp_id', $latest_stock_price_id)
                 ->value('stockp_close');
@@ -471,6 +600,9 @@ class PortController extends Controller
             // เช็คว่ายอดเงินพอซื้อหุ้นหรือไม่
             if ($balance >= $total_cost) {
                 // เพิ่มข้อมูลการซื้อในตาราง buys
+
+                // INSERT INTO buys (port_id, stockp_id, volume, created_at, updated_at)
+                // VALUES ($port->port_id, $latest_stock_price_id, $volume, NOW(), NOW());                
                 DB::table('buys')->insert([
                     'port_id' => $port->port_id,
                     'stockp_id' => $latest_stock_price_id,
@@ -480,9 +612,17 @@ class PortController extends Controller
                 ]);
 
                 // ลดยอดเงินคงเหลือในพอร์ต
+
+                // UPDATE ports
+                // SET balance = balance - $total_cost
+                // WHERE port_id = $port->port_id;                
                 DB::table('ports')
                     ->where('port_id', $port->port_id)
                     ->decrement('balance', $total_cost);
+
+                // SELECT balance
+                // FROM ports
+                // WHERE port_id = $port->port_id;
                 $port->balance = DB::table('ports')->where('port_id', $port->port_id)->value('balance');
                 // ส่งกลับข้อความหรือ redirect ตามที่คุณต้องการ
                 return view('real_pages.user_buy_result', [
@@ -535,6 +675,12 @@ class PortController extends Controller
 
 
         // หา ID ของหุ้นล่าสุดจากตาราง stock_prices โดยใช้ stock_symbol
+
+        // SELECT stockp_id
+        // FROM stock_prices
+        // WHERE stock_symbol = $stock_symbol
+        // ORDER BY updated_at DESC
+        // LIMIT 1;        
         $latest_stock_price_id = DB::table('stock_prices')
             ->where('stock_symbol', $stock_symbol)
             ->orderBy('updated_at', 'desc')
@@ -543,11 +689,19 @@ class PortController extends Controller
         // ตรวจสอบว่ามีข้อมูลราคาหุ้นล่าสุดหรือไม่
         if ($latest_stock_price_id) {
             // หายอดเงินคงเหลือในพอร์ต
+
+            // SELECT balance
+            // FROM ports
+            // WHERE port_id = $port->port_id;            
             $balance = DB::table('ports')
                 ->where('port_id', $port->port_id)
                 ->value('balance');
 
             // หาราคาหุ้นล่าสุด
+
+            // SELECT stockp_close
+            // FROM stock_prices
+            // WHERE stockp_id = $latest_stock_price_id;            
             $stockp_close = DB::table('stock_prices')
                 ->where('stockp_id', $latest_stock_price_id)
                 ->value('stockp_close');
@@ -556,6 +710,12 @@ class PortController extends Controller
             $total_cost = $volume * $stockp_close;
 
             // หาจำนวนหุ้นที่ถูกซื้อของหุ้นนั้นๆ
+
+            // SELECT SUM(buys.volume)
+            // FROM buys
+            // JOIN stock_prices ON buys.stockp_id = stock_prices.stockp_id
+            // WHERE buys.port_id = $port->port_id
+            // AND stock_prices.stock_symbol = '$stock_symbol';            
             $total_buy_volume = DB::table('buys')
                 ->join('stock_prices', 'buys.stockp_id', '=', 'stock_prices.stockp_id')
                 ->where('buys.port_id', $port->port_id)
@@ -563,6 +723,12 @@ class PortController extends Controller
                 ->sum('buys.volume');
 
             // หาจำนวนหุ้นที่ขายของหุ้นนั้นๆ
+
+            // SELECT SUM(sells.volume)
+            // FROM sells
+            // JOIN stock_prices ON sells.stockp_id = stock_prices.stockp_id
+            // WHERE sells.port_id = $port->port_id
+            // AND stock_prices.stock_symbol = '$stock_symbol';            
             $total_sell_volume = DB::table('sells')
                 ->join('stock_prices', 'sells.stockp_id', '=', 'stock_prices.stockp_id')
                 ->where('sells.port_id', $port->port_id)
@@ -575,6 +741,9 @@ class PortController extends Controller
             // เช็คว่ายอดหุ้นพอขายหรือไม่
             if ($volume <= $total_remaining_volume) {
                 // เพิ่มข้อมูลการขายในตาราง buys
+
+                // INSERT INTO sells (port_id, stockp_id, volume, created_at, updated_at)
+                // VALUES ($port->port_id, $latest_stock_price_id, $volume, NOW(), NOW());
                 DB::table('sells')->insert([
                     'port_id' => $port->port_id,
                     'stockp_id' => $latest_stock_price_id,
@@ -584,9 +753,17 @@ class PortController extends Controller
                 ]);
 
                 // เพิ่มยอดเงินคงเหลือในพอร์ต
+
+                // UPDATE ports
+                // SET balance = balance + $total_cost
+                // WHERE port_id = $port->port_id;
                 DB::table('ports')
                     ->where('port_id', $port->port_id)
                     ->increment('balance', $total_cost);
+                
+                // SELECT balance
+                // FROM ports
+                // WHERE port_id = $port->port_id;                    
                 $port->balance = DB::table('ports')->where('port_id', $port->port_id)->value('balance');
 
                 // ส่งกลับข้อความหรือ redirect ตามที่คุณต้องการ
@@ -612,9 +789,8 @@ class PortController extends Controller
     public function showwallet(Request $request) {
         $port = $request->session()->get('port');
         $user = $request->session()->get('user');
-
-
-        return view('real_pages/user_wallet_main', compact('port', 'user'));
+        $balance = $port->balance;
+        return view('real_pages/user_wallet_main', compact('port', 'user','balance'));
     }
 
 }

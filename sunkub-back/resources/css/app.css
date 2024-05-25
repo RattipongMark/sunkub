@@ -6,7 +6,9 @@ a{
     color: white;
     text-decoration: none;
   }
-
+body{
+  background-color: #27272A;
+}
 .navpo{
   z-index: 1;
 }

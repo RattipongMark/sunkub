@@ -19,7 +19,7 @@
 @endsection
 
 @section('contentnav')
-    ตลาดหุ้น
+    จัดการตลาดหลักทรัพย์
 @endsection
 
 @section('content')
@@ -73,7 +73,7 @@
                         <div id="stock_selection" class="form-group mt-4 flex-1">
                             <label class="block mb-2 text-sm font-medium text-white">Select Stock:</label>
                             <select
-                                class="form-multiselect block rounded-lg bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                class="form-multiselect block rounded-lg bg-gray-50 border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 id="stock-select" name="selected_stocks[]" multiple>
                                 @foreach ($stocks as $stock)
                                     <option value="{{ $stock->stock_symbol }}">{{ $stock->stock_symbol }} -

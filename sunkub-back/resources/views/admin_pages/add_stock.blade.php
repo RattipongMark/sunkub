@@ -15,11 +15,11 @@
 
 
 @section('title')
-    Add Broker
+    Add Stock
 @endsection
 
 @section('contentnav')
-    ตลาดหุ้น
+    จัดการหุ้น
 @endsection
 
 @section('content')
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     <div class="bg-neutral-700 mx-5 mt-5 rounded-t-xl h-full min-h-dvh">
         <div class="pt-3 ml-4 ">
-            <a href="/admin/managebroker"><img src="{{ url('images/backArrow.svg') }}" class="size-6"></a>
+            <a href="/admin/managestocks"><img src="{{ url('images/backArrow.svg') }}" class="size-6"></a>
         </div>
         <div class="grid grid-row-2 mx-5 ">
             <div class="ml-3">

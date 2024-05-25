@@ -12,7 +12,7 @@
 @endsection
 
 @section('contentnav')
-    ภาพรวม แดชบอร์ด
+    จัดการตลาดหลักทรัพย์
 @endsection
 @php
 $bgColors = ['bg-zinc-800', 'bg-zinc-600']; //define background colors

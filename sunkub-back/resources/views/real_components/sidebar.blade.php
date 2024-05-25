@@ -24,7 +24,7 @@
         .market-closed {
             color: rgb(248 113 113);
         }
-    </style>
+        
     </style>
 </head>
 

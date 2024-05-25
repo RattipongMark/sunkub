@@ -12,6 +12,7 @@
     <style>
       body {
           font-family: 'Kanit';
+          background-color: #27272A;
       }
       </style>
 </head>

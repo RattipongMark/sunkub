@@ -11,7 +11,7 @@ class StockController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($id)
+    public function index1($id)
     {
         //<?php
         // $stock = DB::table('stocks')->where('stock_id',$id)->first();
