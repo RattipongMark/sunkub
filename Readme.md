@@ -1,4 +1,6 @@
-# CPE 241 Database Systems Final Project
+videopresentation : https://youtu.be/xU8SEEmt-60
+
+# CPE 241 Database Systems Final Project 
 
 ## Sunkub (Stock Trading)
 
